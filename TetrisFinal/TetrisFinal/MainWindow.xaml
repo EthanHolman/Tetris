@@ -5,12 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TetrisFinal"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
-    <Grid>
+        Title="Tetris" Height="500" Width="700" ResizeMode="NoResize">
+    <Grid Background="Black">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="118*"/>
-            <ColumnDefinition Width="399*"/>
+            <ColumnDefinition Width="400*"/>
+            <ColumnDefinition Width="300*"/>
         </Grid.ColumnDefinitions>
+        <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="792" Grid.ColumnSpan="3">
+            <MenuItem Header="Game" FontSize="12"></MenuItem>
+            <MenuItem Header="Help" FontSize="12"></MenuItem>
+        </Menu>
+        <Grid HorizontalAlignment="Left" Height="410" Margin="20,40,20,20" VerticalAlignment="Top" Width="360" Background="LightGray">
+            <Rectangle Height="36" Width="36" VerticalAlignment="Bottom" HorizontalAlignment="Left" Stroke="White" StrokeThickness="2" Fill="Red"></Rectangle>
+        </Grid>
 
     </Grid>
 </Window>
