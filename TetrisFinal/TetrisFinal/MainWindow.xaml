@@ -11,9 +11,19 @@
             <ColumnDefinition Width="350*"/>
             <ColumnDefinition Width="300*"/>
         </Grid.ColumnDefinitions>
-        <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="792" Grid.ColumnSpan="3">
-            <MenuItem Header="Game" FontSize="12"></MenuItem>
-            <MenuItem Header="Help" FontSize="12"></MenuItem>
+        <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="625" Grid.ColumnSpan="3">
+            <MenuItem Header="File">
+                <MenuItem Header="New Game"></MenuItem>
+                <MenuItem Header="Exit"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Game">
+                <MenuItem Header="Start"></MenuItem>
+                <MenuItem Header="Pause"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About"></MenuItem>
+                <MenuItem Header="Rules"></MenuItem>
+            </MenuItem>
         </Menu>
         <Grid HorizontalAlignment="Left" Height="540" Margin="20,40,20,20" VerticalAlignment="Top" Width="300" Background="LightGray">
             <Rectangle Height="30" Width="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Stroke="White" StrokeThickness="2" Fill="Red"></Rectangle>
