@@ -24,26 +24,117 @@ namespace TetrisFinal {
             InitializeComponent();
         }
 
-        private void StartNewGame() {
+        //---------------------------------------Commands--------------------------------------
+        private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
             this.game = new Game();
         }
 
-        private void CloseGame() {
-            var result = MessageBox.Show("Are you sure you want to quit?", "Tetris", MessageBoxButton.YesNo);
-            if(result.Equals(MessageBoxResult.Yes)) this.Close();
-        }
-
-        private void Start() {
+        private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
             
         }
 
-        private void Pause() {
-
+        private void ExecutedPauseCommand(object sender, ExecutedRoutedEventArgs e) {
+            
         }
 
-        private void MenuItem_NewGame(object sender, RoutedEventArgs e) => StartNewGame();
-        private void MenuItem_ExitGame(object sender, RoutedEventArgs e) => CloseGame();
-        private void MenuItem_Start(object sender, RoutedEventArgs e) => Start();
-        private void MenuItem_Pause(object sender, RoutedEventArgs e) => Pause();
+        private void ExecutedExitCommand(object sender, ExecutedRoutedEventArgs e) {
+            if (MessageBox.Show("Are you sure you want to exit?", "Tetris", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                this.Close();
+        }
+
+        private void ExecutedAboutCommand(object sender, ExecutedRoutedEventArgs e) {
+            
+        }
+
+        private void ExecutedRulesCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            
+        }
+
+
+        //---------------------------CanExecute Commands--------------------------------------
+        private void CanExecuteNewGameCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Control target = e.Source as Control;
+
+            if (target != null)
+            {
+                e.CanExecute = true;
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+        }
+
+        private void CanExecuteStartCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Control target = e.Source as Control;
+
+            if (target != null)
+            {
+                e.CanExecute = true;
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+        }
+
+        private void CanExecutePauseCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Control target = e.Source as Control;
+
+            if (target != null)
+            {
+                e.CanExecute = true;
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+        }
+
+        private void CanExecuteExitCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Control target = e.Source as Control;
+
+            if (target != null)
+            {
+                e.CanExecute = true;
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+        }
+
+        private void CanExecuteAboutCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Control target = e.Source as Control;
+
+            if (target != null)
+            {
+                e.CanExecute = true;
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+        }
+
+        private void CanExecuteRulesCommand(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Control target = e.Source as Control;
+
+            if (target != null)
+            {
+                e.CanExecute = true;
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+        }
     }
 }

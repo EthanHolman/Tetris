@@ -6,6 +6,36 @@
         xmlns:local="clr-namespace:TetrisFinal"
         mc:Ignorable="d"
         Title="Tetris" Height="630" Width="630" ResizeMode="NoResize">
+
+    <Window.InputBindings>
+        <KeyBinding Command="{x:Static local:Commands.NewGame}" Modifiers="Control" Key="N"/>
+        <KeyBinding Command="{x:Static local:Commands.Start}" Modifiers="Control" Key="G"/>
+        <KeyBinding Command="{x:Static local:Commands.Pause}" Modifiers="Control" Key="P"/>
+        <KeyBinding Command="{x:Static local:Commands.Exit}" Modifiers="Control" Key="E"/>
+        <KeyBinding Command="{x:Static local:Commands.About}" Modifiers="Control" Key="A"/>
+        <KeyBinding Command="{x:Static local:Commands.Rules}" Modifiers="Control" Key="H"/>
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:Commands.NewGame}"
+                    Executed="ExecutedNewGameCommand"
+                    CanExecute="CanExecuteNewGameCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Start}"
+                    Executed="ExecutedStartCommand"
+                    CanExecute="CanExecuteStartCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Pause}"
+                    Executed="ExecutedPauseCommand"
+                    CanExecute="CanExecutePauseCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Exit}"
+                    Executed="ExecutedExitCommand"
+                    CanExecute="CanExecuteExitCommand" />
+        <CommandBinding Command="{x:Static local:Commands.About}"
+                    Executed="ExecutedAboutCommand"
+                    CanExecute="CanExecuteAboutCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Rules}"
+                    Executed="ExecutedRulesCommand"
+                    CanExecute="CanExecuteRulesCommand" />
+    </Window.CommandBindings>
+
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350*"/>
@@ -13,16 +43,16 @@
         </Grid.ColumnDefinitions>
         <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="625" Grid.ColumnSpan="3">
             <MenuItem Header="File">
-                <MenuItem Header="New Game" Click="MenuItem_NewGame"></MenuItem>
-                <MenuItem Header="Exit" Click="MenuItem_ExitGame"></MenuItem>
+                <MenuItem Header="New Game" InputGestureText="Ctrl+N" Command="{x:Static local:Commands.NewGame}"></MenuItem>
+                <MenuItem Header="Exit" InputGestureText="Ctrl+E" Command="{x:Static local:Commands.Exit}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Game">
-                <MenuItem Header="Start" Click="MenuItem_Start"></MenuItem>
-                <MenuItem Header="Pause" Click="MenuItem_Pause"></MenuItem>
+                <MenuItem Header="Start" InputGestureText="Ctrl+G" Command="{x:Static local:Commands.Start}"></MenuItem>
+                <MenuItem Header="Pause" InputGestureText="Ctrl+P" Command="{x:Static local:Commands.Pause}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About"></MenuItem>
-                <MenuItem Header="Rules"></MenuItem>
+                <MenuItem Header="About" InputGestureText="Ctrl+A" Command="{x:Static local:Commands.About}"></MenuItem>
+                <MenuItem Header="Rules" InputGestureText="Ctrl+R" Command="{x:Static local:Commands.Rules}"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid HorizontalAlignment="Left" Height="540" Margin="20,40,20,20" VerticalAlignment="Top" Width="300" Background="LightGray">

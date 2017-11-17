@@ -57,6 +57,7 @@
     <Compile Include="AboutGame.xaml.cs">
       <DependentUpon>AboutGame.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commands.cs" />
     <Compile Include="Models\Block.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
