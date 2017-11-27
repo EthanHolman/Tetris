@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace TetrisFinal.Models {
     class Block {
-        public int Points { get; set; }
+        public string Color { get; set; }
+        public BlockShapes Shape { get; set; }
+        public Block(BlockShapes newShape) {
+            Shape = newShape;
+        }
     }
 }

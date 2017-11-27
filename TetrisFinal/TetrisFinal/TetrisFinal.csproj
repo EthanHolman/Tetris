@@ -58,6 +58,8 @@
       <DependentUpon>AboutGame.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Block.cs" />
+    <Compile Include="Models\BlockShapes.cs" />
+    <Compile Include="Models\GameBoard.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
     </Compile>
