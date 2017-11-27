@@ -5,28 +5,71 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TetrisFinal"
         mc:Ignorable="d"
-        Title="Tetris" Height="630" Width="630" ResizeMode="NoResize">
+        Title="Tetris" Height="680" Width="630" ResizeMode="NoResize">
+
+    <Window.InputBindings>
+        <KeyBinding Command="{x:Static local:Commands.NewGame}" Modifiers="Control" Key="N"/>
+        <KeyBinding Command="{x:Static local:Commands.Start}" Modifiers="Control" Key="G"/>
+        <KeyBinding Command="{x:Static local:Commands.Pause}" Modifiers="Control" Key="P"/>
+        <KeyBinding Command="{x:Static local:Commands.Exit}" Modifiers="Control" Key="E"/>
+        <KeyBinding Command="{x:Static local:Commands.About}" Modifiers="Control" Key="A"/>
+        <KeyBinding Command="{x:Static local:Commands.Rules}" Modifiers="Control" Key="H"/>
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:Commands.NewGame}"
+                    Executed="ExecutedNewGameCommand"
+                    CanExecute="CanExecuteNewGameCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Start}"
+                    Executed="ExecutedStartCommand"
+                    CanExecute="CanExecuteStartCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Pause}"
+                    Executed="ExecutedPauseCommand"
+                    CanExecute="CanExecutePauseCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Exit}"
+                    Executed="ExecutedExitCommand"
+                    CanExecute="CanExecuteExitCommand" />
+        <CommandBinding Command="{x:Static local:Commands.About}"
+                    Executed="ExecutedAboutCommand"
+                    CanExecute="CanExecuteAboutCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Rules}"
+                    Executed="ExecutedRulesCommand"
+                    CanExecute="CanExecuteRulesCommand" />
+    </Window.CommandBindings>
+
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350*"/>
-            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="370*"/>
+            <ColumnDefinition Width="320*"/>
         </Grid.ColumnDefinitions>
         <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="625" Grid.ColumnSpan="3">
             <MenuItem Header="File">
-                <MenuItem Header="New Game" Click="MenuItem_NewGame"></MenuItem>
-                <MenuItem Header="Exit" Click="MenuItem_ExitGame"></MenuItem>
+                <MenuItem Header="New Game" InputGestureText="Ctrl+N" Command="{x:Static local:Commands.NewGame}"></MenuItem>
+                <MenuItem Header="Exit" InputGestureText="Ctrl+E" Command="{x:Static local:Commands.Exit}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Game">
-                <MenuItem Header="Start" Click="MenuItem_Start"></MenuItem>
-                <MenuItem Header="Pause" Click="MenuItem_Pause"></MenuItem>
+                <MenuItem Header="Start" InputGestureText="Ctrl+G" Command="{x:Static local:Commands.Start}"></MenuItem>
+                <MenuItem Header="Pause" InputGestureText="Ctrl+P" Command="{x:Static local:Commands.Pause}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About"></MenuItem>
-                <MenuItem Header="Rules"></MenuItem>
+                <MenuItem Header="About" InputGestureText="Ctrl+A" Command="{x:Static local:Commands.About}"></MenuItem>
+                <MenuItem Header="Rules" InputGestureText="Ctrl+R" Command="{x:Static local:Commands.Rules}"></MenuItem>
             </MenuItem>
         </Menu>
-        <Grid HorizontalAlignment="Left" Height="540" Margin="20,40,20,20" VerticalAlignment="Top" Width="300" Background="LightGray">
+        <Grid HorizontalAlignment="Center" Margin="20,0,0,-20" Height="540" VerticalAlignment="Center" Width="300" Background="LightGray">
             <Rectangle Height="30" Width="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Stroke="White" StrokeThickness="2" Fill="Red"></Rectangle>
         </Grid>
+        
+        <Label Content="Next Block" Grid.Column="1" FontSize="30" Foreground="Blue" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top"/>
+        
+        <Label Content="Score" Grid.Column="1" FontSize="20" Foreground="LightGreen" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top"/>
+        <Label Content="0" Grid.Column="1" FontSize="30" Foreground="LightGreen" HorizontalAlignment="Center" Margin="0,230,0,0" VerticalAlignment="Top"/>
+
+        <Label Content="Lines" Grid.Column="1" FontSize="20" Foreground="Yellow" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Center"/>
+        <Label Content="0" Grid.Column="1" FontSize="30" Foreground="Yellow" HorizontalAlignment="Center" Margin="0,95,0,0" VerticalAlignment="Center"/>
+
+        <Label Content="Level" Grid.Column="1" FontSize="20" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,240,0,0" VerticalAlignment="Center"/>
+        <Label Content="0" Grid.Column="1" FontSize="30" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,315,0,0" VerticalAlignment="Center"/>
+        
+        <Label Name="IsPaused_Label" Content="Pause" Grid.Column="1" FontSize="40" Foreground="Red" HorizontalAlignment="Center" Margin="0,0,0,30" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>
