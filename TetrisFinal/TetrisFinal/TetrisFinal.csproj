@@ -60,6 +60,7 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Models\Block.cs" />
     <Compile Include="Models\BlockShapes.cs" />
+    <Compile Include="Models\BumpOnALog.cs" />
     <Compile Include="Models\GameBoard.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
