@@ -44,13 +44,13 @@ namespace TetrisFinal.Services {
                 case 0: toReturn = new Block(BlockShapes.Line); break;
                 case 1: toReturn = new Block(BlockShapes.L1); break;
                 case 2: toReturn = new Block(BlockShapes.L2); break;
-                case 3: toReturn = new Block(BlockShapes.Square); break;
+                case 3: toReturn = new Block(BlockShapes.Zig); break;
                 case 4: toReturn = new Block(BlockShapes.Zag); break;
-                case 5: toReturn = new Block(BlockShapes.Zig); break;
-                case 6: toReturn = new Block(BlockShapes.BumpOnALog); break;
+                case 5: toReturn = new Block(BlockShapes.BumpOnALog); break;
+                case 6: toReturn = new Block(BlockShapes.Square); break;
             }
 
-            return 
+            return toReturn;
         }
 
         public void IncreaseSpeed() { Speed *= 1.25; }
