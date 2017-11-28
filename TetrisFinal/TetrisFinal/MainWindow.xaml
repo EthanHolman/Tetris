@@ -14,6 +14,11 @@
         <KeyBinding Command="{x:Static local:Commands.Exit}" Modifiers="Control" Key="E"/>
         <KeyBinding Command="{x:Static local:Commands.About}" Modifiers="Control" Key="A"/>
         <KeyBinding Command="{x:Static local:Commands.Rules}" Modifiers="Control" Key="H"/>
+        <KeyBinding Command="{x:Static local:Commands.MoveLeft}" Key="Left"/>
+        <KeyBinding Command="{x:Static local:Commands.MoveRight}" Key="Right"/>
+        <KeyBinding Command="{x:Static local:Commands.RotateClockwise}" Key="Z"/>
+        <KeyBinding Command="{x:Static local:Commands.RotateCounterClockwise}" Key="X"/>
+        <KeyBinding Command="{x:Static local:Commands.Drop}" Key="Space"/>
     </Window.InputBindings>
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:Commands.NewGame}"
@@ -34,6 +39,21 @@
         <CommandBinding Command="{x:Static local:Commands.Rules}"
                     Executed="ExecutedRulesCommand"
                     CanExecute="CanExecuteRulesCommand" />
+        <CommandBinding Command="{x:Static local:Commands.MoveLeft}"
+                    Executed="ExecutedMoveLeftCommand"
+                    CanExecute="CanExecuteMoveLeftCommand" />
+        <CommandBinding Command="{x:Static local:Commands.MoveRight}"
+                    Executed="ExecutedMoveRightCommand"
+                    CanExecute="CanExecuteMoveRightCommand" />
+        <CommandBinding Command="{x:Static local:Commands.RotateClockwise}"
+                    Executed="ExecutedRotateClockwiseCommand"
+                    CanExecute="CanExecuteRotateClockwiseCommand" />
+        <CommandBinding Command="{x:Static local:Commands.RotateCounterClockwise}"
+                    Executed="ExecutedRotateCounterClockwiseCommand"
+                    CanExecute="CanExecuteRotateCounterClockwiseCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Drop}"
+                    Executed="ExecutedDropCommand"
+                    CanExecute="CanExecuteDropCommand" />
     </Window.CommandBindings>
 
     <Grid Background="Black">
@@ -55,7 +75,8 @@
                 <MenuItem Header="Rules" InputGestureText="Ctrl+R" Command="{x:Static local:Commands.Rules}"></MenuItem>
             </MenuItem>
         </Menu>
-        <Grid HorizontalAlignment="Center" Margin="20,0,0,-20" Height="540" VerticalAlignment="Center" Width="300" Background="LightGray">
+        <Grid HorizontalAlignment="Center" Margin="20,0,0,-20" Height="540" VerticalAlignment="Center" Width="300">
+            <Canvas  HorizontalAlignment="Center" Height="540" VerticalAlignment="Center" Width="300" Background="LightGray"></Canvas>
             <Rectangle Height="30" Width="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Stroke="White" StrokeThickness="2" Fill="Red"></Rectangle>
         </Grid>
         
