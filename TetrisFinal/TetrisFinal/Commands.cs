@@ -14,5 +14,10 @@ namespace TetrisFinal
         public static readonly RoutedCommand Exit = new RoutedCommand();
         public static readonly RoutedCommand About = new RoutedCommand();
         public static readonly RoutedCommand Rules = new RoutedCommand();
+        public static readonly RoutedCommand MoveLeft = new RoutedCommand();
+        public static readonly RoutedCommand MoveRight = new RoutedCommand();
+        public static readonly RoutedCommand RotateClockwise = new RoutedCommand();
+        public static readonly RoutedCommand RotateCounterClockwise = new RoutedCommand();
+        public static readonly RoutedCommand Drop = new RoutedCommand();
     }
 }
