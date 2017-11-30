@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 namespace TetrisFinal.Models {
     public interface Block {
         string Color { get; set; }
+        int[,,] Grid { get; set; }
     }
 }

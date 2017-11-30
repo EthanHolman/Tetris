@@ -60,8 +60,14 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Models\Block.cs" />
     <Compile Include="Models\BlockShapes.cs" />
-    <Compile Include="Models\BumpOnALog.cs" />
+    <Compile Include="Models\Blocks\BumpOnALogBlock.cs" />
     <Compile Include="Models\GameBoard.cs" />
+    <Compile Include="Models\Blocks\L1Block.cs" />
+    <Compile Include="Models\Blocks\L2Block.cs" />
+    <Compile Include="Models\Blocks\LineBlock.cs" />
+    <Compile Include="Models\Blocks\SquareBlock.cs" />
+    <Compile Include="Models\Blocks\ZagBlock.cs" />
+    <Compile Include="Models\Blocks\ZigBlock.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
     </Compile>

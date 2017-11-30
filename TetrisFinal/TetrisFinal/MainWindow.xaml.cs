@@ -22,6 +22,13 @@ namespace TetrisFinal {
         private Game game;
         public MainWindow() {
             InitializeComponent();
+            Game tetris = new Game();
+            tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
+        }
+
+        // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
+        private void OnGameboardUpdate() {
+
         }
 
         //---------------------------------------Commands--------------------------------------
