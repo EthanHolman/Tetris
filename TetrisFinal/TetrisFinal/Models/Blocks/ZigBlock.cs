@@ -8,6 +8,8 @@ namespace TetrisFinal.Models {
     class ZigBlock : Block {
         public string Color { get; set; }
         public int[,,] Grid { get; set; }
+        public List<Point> Points { get; set; }
+        public int CurrentRotation { get; set; }
 
         public ZigBlock() {
             this.Grid = new int[2, 3, 3] {

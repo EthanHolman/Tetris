@@ -9,6 +9,8 @@ namespace TetrisFinal.Models {
 
         public int[,,] Grid { get; set; }
         public string Color { get; set; }
+        public List<Point> Points { get; set; }
+        public int CurrentRotation { get; set; }
 
         public BumpOnALogBlock() {
             Grid = new int[4, 3, 3] { 

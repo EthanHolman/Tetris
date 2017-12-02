@@ -13,6 +13,7 @@ namespace TetrisFinal.Services {
         private bool _GameRunning;
         private Timer _timer;
         private event GameboardUpdateEventHandler _onGameboardUpdate;
+        private Block _currentBlock;
 
         public bool GameRunning { get => _GameRunning; }
         public int RowCount { get; set; }
@@ -30,6 +31,7 @@ namespace TetrisFinal.Services {
             _GameRunning = false;
             Speed = 1.0;
             Points = 0;
+            _currentBlock = null;
         }
 
         public void Start() {
@@ -62,12 +64,42 @@ namespace TetrisFinal.Services {
 
         // This method will get called each time a block moves downward via timer
         private void OnTimerTick(object source, ElapsedEventArgs e) {
-            // Update block positions in grid
+            
+            if(_currentBlock == null) { // If there is no current block, get new block and insert it on the gameboard
+
+                // Get new block
+                _currentBlock = GetNextBlock();
+
+                // Create initial points for this block, in reference to the gameboard
+                for(int i = 0; i < _currentBlock.Grid.GetLength(2); i++) {
+                    for(int j = 0; j < _currentBlock.Grid.GetLength(3); j++) {
+                        if(_currentBlock.Grid[_currentBlock.CurrentRotation, i, j] == 1)
+                            _currentBlock.Points.Add(new Point(j, i));
+                    }
+                }
+
+                // Check if all points are able to move down without a collision
+
+                // For each point in points, add point to gameboard
+
+            } else { // Update block positions in grid
+
+                // Check if all points are able to move down without a collision
+
+                // Move all points down, both in points collection and on gameboard
+
+            }
 
             // Check if there is a line
 
             // Fire event to have GUI update
-            if(_onGameboardUpdate != null) _onGameboardUpdate();
+            if (_onGameboardUpdate != null) _onGameboardUpdate();
+        }
+
+        private bool insertNewBlock(Block b) {
+
+
+            return false;
         }
 
         public void AddGameboardUpdateEventHandler(GameboardUpdateEventHandler blockMove) { _onGameboardUpdate += blockMove; }

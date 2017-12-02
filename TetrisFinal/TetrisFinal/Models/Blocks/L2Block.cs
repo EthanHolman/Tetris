@@ -8,6 +8,8 @@ namespace TetrisFinal.Models {
     class L2Block : Block {
         public string Color { get; set; }
         public int[,,] Grid { get; set; }
+        public List<Point> Points { get; set; }
+        public int CurrentRotation { get; set; }
 
         public L2Block() {
             this.Grid = new int[4, 3, 3] {
