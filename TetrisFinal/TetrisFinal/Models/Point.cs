@@ -12,5 +12,15 @@ namespace TetrisFinal.Models {
 
         public Point(int x, int y) { this.x = x; this.y = y; }
         public Point(int x, int y, string color) { this.x = x; this.y = y; this.Color = color; }
+
+        public override bool Equals(object obj) {
+            if(obj == null) return false;
+            var that = obj as Point;
+            return this.x == that.x && this.y == that.y && this.Color == that.Color;
+        }
+
+        public override int GetHashCode() {
+            return (x.ToString() + y.ToString() + Color).GetHashCode();
+        }
     }
 }

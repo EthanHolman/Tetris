@@ -83,16 +83,22 @@ namespace TetrisFinal.Services {
                 }
 
                 // Try to add the points to gameboard
-                // If this fails, they didn't fit on the gameboard, and that game's over
+                // If this fails, they didn't fit on the gameboard, and the game's over
                 if(!Gameboard.AddPoints(_currentBlock.Points)) {
                     // Game over
                 }
 
             } else { // Update block positions in grid
 
-                // Check if all points are able to move down without a collision
+                // Move all points down and see if they still "fit" on the gameboard
+                List<Point> movedPoints = TranslatePoints(_currentBlock.Points, MoveDirection.Down);
+                if (Gameboard.WillPointsFit(movedPoints, _currentBlock.Points)) {
+                    // The block is safe to move down from it's current position
 
-                // Move all points down, both in points collection and on gameboard
+                } else {
+                    // Move all points down, both in points collection and on gameboard
+
+                }
 
             }
 
@@ -100,6 +106,27 @@ namespace TetrisFinal.Services {
 
             // Fire event to have GUI update
             if (_onGameboardUpdate != null) _onGameboardUpdate();
+        }
+
+        // TODO this method needs to work with a copy of points
+        public List<Point> TranslatePoints(List<Point> points, MoveDirection direction) {
+            var modifiedPoints = new List<Point>(points);
+            int xMoveAmount = 0;
+            int yMoveAmount = 0;
+
+            switch (direction) {
+                case MoveDirection.Down: yMoveAmount = 1; break;
+                case MoveDirection.Left: xMoveAmount = -1; break;
+                case MoveDirection.Right: xMoveAmount = 1; break;
+                case MoveDirection.Up: yMoveAmount = -1; break;
+            }
+
+            foreach (Point p in modifiedPoints) {
+                p.x += xMoveAmount;
+                p.y += yMoveAmount;
+            }
+
+            return modifiedPoints;
         }
 
         public void AddGameboardUpdateEventHandler(GameboardUpdateEventHandler blockMove) { _onGameboardUpdate += blockMove; }

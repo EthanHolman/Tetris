@@ -30,9 +30,19 @@ namespace TetrisFinal.Models {
             _board.AddFirst(new Point[GAMEBOARD_WIDTH]);
         }
 
+        public bool WillPointFit(Point p) {
+            return Get(p.x, p.y) == null;
+        }
+
         public bool WillPointsFit(List<Point> points) {
+            return WillPointsFit(points, new List<Point>());
+        }
+
+        // TODO catch out of bounds exception
+        public bool WillPointsFit(List<Point> points, List<Point> exemptPoints) {
             foreach (Point p in points) {
-                if (Get(p.x, p.y) != null) return false;
+                var temp = Get(p.x, p.y);
+                if (temp != null && !exemptPoints.Contains(temp)) return false;
             }
 
             return true;
@@ -45,6 +55,22 @@ namespace TetrisFinal.Models {
             }
 
             return false;
+        }
+
+        // TODO this needs to be finished
+        public List<int> FindLines() {
+            var lineNumbersWithLines = new List<int>();
+
+            for (int i = 0; i < _board.Count; i++) {
+                bool rowFull = true;
+                foreach(Point point in _board.ElementAt(i)) {
+
+                }
+
+                if (rowFull) lineNumbersWithLines
+            }
+
+            return lineNumbersWithLines;
         }
 
     }

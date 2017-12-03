@@ -68,6 +68,7 @@
     <Compile Include="Models\Blocks\SquareBlock.cs" />
     <Compile Include="Models\Blocks\ZagBlock.cs" />
     <Compile Include="Models\Blocks\ZigBlock.cs" />
+    <Compile Include="Models\MoveDirection.cs" />
     <Compile Include="Models\Point.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
