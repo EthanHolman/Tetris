@@ -40,9 +40,13 @@ namespace TetrisFinal.Models {
 
         // TODO catch out of bounds exception
         public bool WillPointsFit(List<Point> points, List<Point> exemptPoints) {
-            foreach (Point p in points) {
-                var temp = Get(p.x, p.y);
-                if (temp != null && !exemptPoints.Contains(temp)) return false;
+            try { 
+                foreach (Point p in points) {
+                    var temp = Get(p.x, p.y);
+                    if (temp != null && !exemptPoints.Contains(temp)) return false;
+                }
+            } catch(Exception) {
+                return false;
             }
 
             return true;
@@ -67,7 +71,7 @@ namespace TetrisFinal.Models {
 
                 }
 
-                if (rowFull) lineNumbersWithLines
+                //if (rowFull) lineNumbersWithLines
             }
 
             return lineNumbersWithLines;

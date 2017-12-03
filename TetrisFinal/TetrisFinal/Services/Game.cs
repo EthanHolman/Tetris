@@ -94,6 +94,7 @@ namespace TetrisFinal.Services {
                 List<Point> movedPoints = TranslatePoints(_currentBlock.Points, MoveDirection.Down);
                 if (Gameboard.WillPointsFit(movedPoints, _currentBlock.Points)) {
                     // The block is safe to move down from it's current position
+                    
 
                 } else {
                     // Move all points down, both in points collection and on gameboard
