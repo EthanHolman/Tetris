@@ -37,6 +37,7 @@ namespace TetrisFinal.Models {
             };
 
             this.Color = "Black";
+            this.Points = new List<Point>();
         }
     }
 }

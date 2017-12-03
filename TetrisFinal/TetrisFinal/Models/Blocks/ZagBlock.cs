@@ -26,6 +26,7 @@ namespace TetrisFinal.Models {
             };
 
             this.Color = "Pink";
+            this.Points = new List<Point>();
         }
     }
 }

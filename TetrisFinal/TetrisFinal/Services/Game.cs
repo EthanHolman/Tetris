@@ -8,7 +8,7 @@ using TetrisFinal.Models;
 
 namespace TetrisFinal.Services {
     public delegate void GameboardUpdateEventHandler();
-    class Game {
+    public class Game {
 
         private bool _GameRunning;
         private Timer _timer;
@@ -19,6 +19,7 @@ namespace TetrisFinal.Services {
         public int RowCount { get; set; }
         public double Speed { get; set; }
         public int Points { get; set; }
+        public GameBoard Gameboard { get; set; }
 
         public Game() {
             InitGame();
@@ -32,6 +33,7 @@ namespace TetrisFinal.Services {
             Speed = 1.0;
             Points = 0;
             _currentBlock = null;
+            Gameboard = new GameBoard();
         }
 
         public void Start() {
@@ -63,7 +65,7 @@ namespace TetrisFinal.Services {
         public void IncreaseSpeed() { Speed *= 1.25; }
 
         // This method will get called each time a block moves downward via timer
-        private void OnTimerTick(object source, ElapsedEventArgs e) {
+        public void OnTimerTick(object source, ElapsedEventArgs e) {
             
             if(_currentBlock == null) { // If there is no current block, get new block and insert it on the gameboard
 
@@ -71,16 +73,20 @@ namespace TetrisFinal.Services {
                 _currentBlock = GetNextBlock();
 
                 // Create initial points for this block, in reference to the gameboard
-                for(int i = 0; i < _currentBlock.Grid.GetLength(2); i++) {
-                    for(int j = 0; j < _currentBlock.Grid.GetLength(3); j++) {
-                        if(_currentBlock.Grid[_currentBlock.CurrentRotation, i, j] == 1)
-                            _currentBlock.Points.Add(new Point(j, i));
+                for(int i = 0; i < _currentBlock.Grid.GetLength(1); i++) {
+                    for(int j = 0; j < _currentBlock.Grid.GetLength(2); j++) {
+                        if(_currentBlock.Grid[_currentBlock.CurrentRotation, i, j] == 1) {
+                            // (j, i) == (x, y)
+                            _currentBlock.Points.Add(new Point(j + 4, i, _currentBlock.Color));
+                        }
                     }
                 }
 
-                // Check if all points are able to move down without a collision
-
-                // For each point in points, add point to gameboard
+                // Try to add the points to gameboard
+                // If this fails, they didn't fit on the gameboard, and that game's over
+                if(!Gameboard.AddPoints(_currentBlock.Points)) {
+                    // Game over
+                }
 
             } else { // Update block positions in grid
 
@@ -94,12 +100,6 @@ namespace TetrisFinal.Services {
 
             // Fire event to have GUI update
             if (_onGameboardUpdate != null) _onGameboardUpdate();
-        }
-
-        private bool insertNewBlock(Block b) {
-
-
-            return false;
         }
 
         public void AddGameboardUpdateEventHandler(GameboardUpdateEventHandler blockMove) { _onGameboardUpdate += blockMove; }

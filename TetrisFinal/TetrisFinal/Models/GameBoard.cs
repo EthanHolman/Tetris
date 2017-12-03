@@ -30,5 +30,22 @@ namespace TetrisFinal.Models {
             _board.AddFirst(new Point[GAMEBOARD_WIDTH]);
         }
 
+        public bool WillPointsFit(List<Point> points) {
+            foreach (Point p in points) {
+                if (Get(p.x, p.y) != null) return false;
+            }
+
+            return true;
+        }
+
+        public bool AddPoints(List<Point> points) {
+            if(WillPointsFit(points)) {
+                foreach(Point p in points) Set(p.x, p.y, p);
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }
