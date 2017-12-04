@@ -10,16 +10,22 @@ namespace TetrisFinal.Services {
     public delegate void GameboardUpdateEventHandler();
     public class Game {
 
+        const int BASE_POINTS = 100;
+
+
         private bool _GameRunning;
         private Timer _timer;
         private event GameboardUpdateEventHandler _onGameboardUpdate;
         private Block _currentBlock;
         private double _speed;
+        private int _linesThisLevel;
+
 
         public bool GameRunning { get => _GameRunning; }
         public Block CurrentBlock { get; }
-        public int RowCount { get; set; }
-        public int Points { get; set; }
+        public int LineCount { get; set; }
+        public int Level { get; set; }
+        public int Score { get; set; }
         public GameBoard Gameboard { get; set; }
 
         public Game() {
@@ -32,8 +38,11 @@ namespace TetrisFinal.Services {
             Gameboard = new GameBoard();
             _GameRunning = false;
             _timer.Interval = _speed = 500;
-            Points = 0;
+            Score = 0;
             _currentBlock = null;
+            LineCount = 0;
+            Level = 1;
+            _linesThisLevel = 0;
         }
 
         public void Start() {
@@ -62,12 +71,15 @@ namespace TetrisFinal.Services {
             return toReturn;
         }
 
-        public void IncreaseSpeed() {
+        public void LevelUp() {
             _speed *= 0.75; // this increases speed by 25%
             _timer.Interval = _speed;
+
+            Level++;
+            _linesThisLevel = 0;
         }
 
-        // This method will get called each time a block moves downward via timer
+        // This method will get called every time the timer "ticks" (when game is started/running)
         public void OnTimerTick(object source, ElapsedEventArgs e) {
             
             if(_currentBlock == null) { // If there is no current block, get new block and insert it on the gameboard
@@ -92,16 +104,36 @@ namespace TetrisFinal.Services {
 
             } else { // Update block positions in grid
 
+                // If block can't move down, then it's hit bottom
                 if (!MoveCurrentBlock(MoveDirection.Down)) {
-                    // Block can't move down, so it's hit bottom
-                    _currentBlock = null;
+                    _currentBlock = null; // time for a new block
+
+                    // Check for and clear any lines, updating line counts, level & score
+                    ClearLines();
                 }
             }
 
-            // Check if there is a line
-
             // Fire event to have GUI update
             if (_onGameboardUpdate != null) _onGameboardUpdate();
+        }
+
+        public void UpdateScore(int lineCount) {
+            Score += ((BASE_POINTS * lineCount) + (50 * (lineCount - 1))) * Level;
+        }
+
+        public void ClearLines() {
+            var lines = Gameboard.FindLines();
+
+            if (lines.Count > 0) {
+                LineCount += lines.Count;
+                _linesThisLevel += lines.Count;
+                UpdateScore(lines.Count);
+
+                if (_linesThisLevel > 9) LevelUp();
+
+                foreach (int lineNumber in lines)
+                    Gameboard.RemoveLine(lineNumber);
+            }
         }
 
         public bool MoveCurrentBlock(MoveDirection direction) {
