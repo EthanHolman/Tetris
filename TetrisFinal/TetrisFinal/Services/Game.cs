@@ -14,26 +14,26 @@ namespace TetrisFinal.Services {
         private Timer _timer;
         private event GameboardUpdateEventHandler _onGameboardUpdate;
         private Block _currentBlock;
+        private double _speed;
 
         public bool GameRunning { get => _GameRunning; }
+        public Block CurrentBlock { get; }
         public int RowCount { get; set; }
-        public double Speed { get; set; }
         public int Points { get; set; }
         public GameBoard Gameboard { get; set; }
 
         public Game() {
-            InitGame();
             _timer = new Timer();
-            _timer.Interval = 500;
             _timer.Elapsed += this.OnTimerTick;
+            InitGame();
         }
 
         public void InitGame() {
+            Gameboard = new GameBoard();
             _GameRunning = false;
-            Speed = 1.0;
+            _timer.Interval = _speed = 500;
             Points = 0;
             _currentBlock = null;
-            Gameboard = new GameBoard();
         }
 
         public void Start() {
@@ -62,7 +62,10 @@ namespace TetrisFinal.Services {
             return toReturn;
         }
 
-        public void IncreaseSpeed() { Speed *= 1.25; }
+        public void IncreaseSpeed() {
+            _speed *= 0.75; // this increases speed by 25%
+            _timer.Interval = _speed;
+        }
 
         // This method will get called each time a block moves downward via timer
         public void OnTimerTick(object source, ElapsedEventArgs e) {
@@ -82,23 +85,16 @@ namespace TetrisFinal.Services {
                     }
                 }
 
-                // Try to add the points to gameboard
-                // If this fails, they didn't fit on the gameboard, and the game's over
+                // If there's no space to add a new block then gameboard is full and game is over
                 if(!Gameboard.AddPoints(_currentBlock.Points)) {
-                    // Game over
+                    // TODO Game over
                 }
 
             } else { // Update block positions in grid
 
-                // Move all points down and see if they still "fit" on the gameboard
-                List<Point> movedPoints = TranslatePoints(_currentBlock.Points, MoveDirection.Down);
-                if (Gameboard.WillPointsFit(movedPoints, _currentBlock.Points)) {
-                    // The block is safe to move down from it's current position
-                    
-
-                } else {
-                    // Move all points down, both in points collection and on gameboard
-
+                if (!MoveCurrentBlock(MoveDirection.Down)) {
+                    // Block can't move down, so it's hit bottom
+                    _currentBlock = null;
                 }
 
             }
@@ -107,6 +103,18 @@ namespace TetrisFinal.Services {
 
             // Fire event to have GUI update
             if (_onGameboardUpdate != null) _onGameboardUpdate();
+        }
+
+        public bool MoveCurrentBlock(MoveDirection direction) {
+            var movedPoints = TranslatePoints(_currentBlock.Points, direction);
+
+            if (Gameboard.WillPointsFit(movedPoints, _currentBlock.Points)) {
+                Gameboard.MovePoints(_currentBlock.Points, movedPoints);
+                _currentBlock.Points = movedPoints;
+                return true;
+            }
+
+            return false;
         }
 
         // TODO this method needs to work with a copy of points

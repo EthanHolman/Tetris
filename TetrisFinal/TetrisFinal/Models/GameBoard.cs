@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace TetrisFinal.Models {
     public class GameBoard {
 
-        const int GAMEBOARD_HEIGHT = 18;
-        const int GAMEBOARD_WIDTH = 10;
+        public const int GAMEBOARD_HEIGHT = 18;
+        public const int GAMEBOARD_WIDTH = 10;
 
         private LinkedList<Point[]> _board;
 
@@ -25,9 +25,8 @@ namespace TetrisFinal.Models {
             _board.ElementAt(y)[x] = p;
         }
 
-        public void RemoveLine(int index) {
-            _board.Remove(_board.ElementAt(index));
-            _board.AddFirst(new Point[GAMEBOARD_WIDTH]);
+        public void ClearAt(Point p) {
+            Set(p.x, p.y, null);
         }
 
         public bool WillPointFit(Point p) {
@@ -38,7 +37,6 @@ namespace TetrisFinal.Models {
             return WillPointsFit(points, new List<Point>());
         }
 
-        // TODO catch out of bounds exception
         public bool WillPointsFit(List<Point> points, List<Point> exemptPoints) {
             try { 
                 foreach (Point p in points) {
@@ -46,36 +44,46 @@ namespace TetrisFinal.Models {
                     if (temp != null && !exemptPoints.Contains(temp)) return false;
                 }
             } catch(Exception) {
-                return false;
+                return false; // In case coordinates fall out of bounds of array/linkedList
             }
 
             return true;
         }
 
         public bool AddPoints(List<Point> points) {
-            if(WillPointsFit(points)) {
-                foreach(Point p in points) Set(p.x, p.y, p);
+            if (WillPointsFit(points)) {
+                foreach (Point p in points) Set(p.x, p.y, p);
                 return true;
             }
 
             return false;
         }
 
-        // TODO this needs to be finished
+        public void MovePoints(List<Point> from, List<Point> to) {
+            for (int i = 0; i < from.Count; i++) {
+                ClearAt(from[i]);
+                Set(to[i].x, to[i].y, to[i]);
+            }
+        }
+        
         public List<int> FindLines() {
             var lineNumbersWithLines = new List<int>();
 
             for (int i = 0; i < _board.Count; i++) {
                 bool rowFull = true;
-                foreach(Point point in _board.ElementAt(i)) {
 
-                }
+                foreach (Point point in _board.ElementAt(i))
+                    if (point == null) rowFull = false;
 
-                //if (rowFull) lineNumbersWithLines
+                if (rowFull) lineNumbersWithLines.Add(i);
             }
 
             return lineNumbersWithLines;
         }
 
+        public void RemoveLine(int index) {
+            _board.Remove(_board.ElementAt(index));
+            _board.AddFirst(new Point[GAMEBOARD_WIDTH]);
+        }
     }
 }
