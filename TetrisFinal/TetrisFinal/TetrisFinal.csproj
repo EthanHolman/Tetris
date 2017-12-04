@@ -70,6 +70,7 @@
     <Compile Include="Models\Blocks\ZigBlock.cs" />
     <Compile Include="Models\MoveDirection.cs" />
     <Compile Include="Models\Point.cs" />
+    <Compile Include="Models\RotateDirection.cs" />
     <Compile Include="Rules.xaml.cs">
       <DependentUpon>Rules.xaml</DependentUpon>
     </Compile>

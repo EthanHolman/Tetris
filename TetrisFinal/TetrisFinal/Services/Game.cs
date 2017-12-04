@@ -136,6 +136,18 @@ namespace TetrisFinal.Services {
             }
         }
 
+        public void RotateCurrentBlock(RotateDirection direction) {
+            if (direction == RotateDirection.ClockWise) {
+                _currentBlock.CurrentRotation++;
+                if (_currentBlock.CurrentRotation >= _currentBlock.Grid.GetLength(0)) _currentBlock.CurrentRotation = 0;
+            } else { 
+                _currentBlock.CurrentRotation--;
+                if (_currentBlock.CurrentRotation < 0) _currentBlock.CurrentRotation = (_currentBlock.Grid.GetLength(0) - 1);
+            }
+            
+            // TODO implement block rotation
+        }
+
         public bool MoveCurrentBlock(MoveDirection direction) {
             var movedPoints = TranslatePoints(_currentBlock.Points, direction);
 
