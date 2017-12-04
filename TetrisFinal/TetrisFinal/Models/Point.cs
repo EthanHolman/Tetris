@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TetrisFinal.Models {
-    public class Point {
+    public class Point : ICloneable {
         public int x { get; set; }
         public int y { get; set; }
         public string Color { get; set; }
@@ -21,6 +21,10 @@ namespace TetrisFinal.Models {
 
         public override int GetHashCode() {
             return (x.ToString() + y.ToString() + Color).GetHashCode();
+        }
+
+        object ICloneable.Clone() {
+            return new Point(this.x, this.y, this.Color);
         }
     }
 }

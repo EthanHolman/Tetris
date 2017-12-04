@@ -96,7 +96,6 @@ namespace TetrisFinal.Services {
                     // Block can't move down, so it's hit bottom
                     _currentBlock = null;
                 }
-
             }
 
             // Check if there is a line
@@ -117,9 +116,9 @@ namespace TetrisFinal.Services {
             return false;
         }
 
-        // TODO this method needs to work with a copy of points
         public List<Point> TranslatePoints(List<Point> points, MoveDirection direction) {
-            var modifiedPoints = new List<Point>(points);
+            // TODO see if this works using ICloneable instead?
+            var modifiedPoints = points.Select(p => new Point(p.x, p.y, p.Color)).ToList();
             int xMoveAmount = 0;
             int yMoveAmount = 0;
 
