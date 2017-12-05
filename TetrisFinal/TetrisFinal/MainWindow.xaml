@@ -16,8 +16,8 @@
         <KeyBinding Command="{x:Static local:Commands.Rules}" Modifiers="Control" Key="H"/>
         <KeyBinding Command="{x:Static local:Commands.MoveLeft}" Key="Left"/>
         <KeyBinding Command="{x:Static local:Commands.MoveRight}" Key="Right"/>
-        <KeyBinding Command="{x:Static local:Commands.RotateClockwise}" Key="Z"/>
-        <KeyBinding Command="{x:Static local:Commands.RotateCounterClockwise}" Key="X"/>
+        <KeyBinding Command="{x:Static local:Commands.RotateClockwise}" Key="Down"/>
+        <KeyBinding Command="{x:Static local:Commands.RotateCounterClockwise}" Key="Up"/>
         <KeyBinding Command="{x:Static local:Commands.Drop}" Key="Space"/>
     </Window.InputBindings>
     <Window.CommandBindings>
@@ -82,13 +82,13 @@
         <Label Content="Next Block" Grid.Column="1" FontSize="30" Foreground="Blue" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top"/>
         
         <Label Content="Score" Grid.Column="1" FontSize="20" Foreground="LightGreen" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top"/>
-        <Label Content="0" Grid.Column="1" FontSize="30" Foreground="LightGreen" HorizontalAlignment="Center" Margin="0,230,0,0" VerticalAlignment="Top"/>
+        <Label Name="CurScore" Content="0" Grid.Column="1" FontSize="30" Foreground="LightGreen" HorizontalAlignment="Center" Margin="0,230,0,0" VerticalAlignment="Top"/>
 
         <Label Content="Lines" Grid.Column="1" FontSize="20" Foreground="Yellow" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Center"/>
-        <Label Content="0" Grid.Column="1" FontSize="30" Foreground="Yellow" HorizontalAlignment="Center" Margin="0,95,0,0" VerticalAlignment="Center"/>
+        <Label Name="CurLines" Content="0" Grid.Column="1" FontSize="30" Foreground="Yellow" HorizontalAlignment="Center" Margin="0,95,0,0" VerticalAlignment="Center"/>
 
         <Label Content="Level" Grid.Column="1" FontSize="20" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,240,0,0" VerticalAlignment="Center"/>
-        <Label Content="0" Grid.Column="1" FontSize="30" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,315,0,0" VerticalAlignment="Center"/>
+        <Label Name="CurLevel" Content="0" Grid.Column="1" FontSize="30" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,315,0,0" VerticalAlignment="Center"/>
         
         <Label Name="IsPaused_Label" Content="Pause" Grid.Column="1" FontSize="40" Foreground="Red" HorizontalAlignment="Center" Margin="0,0,0,30" VerticalAlignment="Bottom"/>
     </Grid>

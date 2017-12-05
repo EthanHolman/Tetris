@@ -66,6 +66,18 @@ namespace TetrisFinal {
             LoopGrid();
         }
 
+        private void UpdateScore() {
+            CurScore.Content = _tetris.Score;
+        }
+
+        private void UpdateLines() {
+            CurLines.Content = _tetris.LineCount;
+        }
+        private void UpdateLevel() {
+            CurLevel.Content = _tetris.Level;
+        }
+
+
         //---------------------------------------Commands--------------------------------------
         private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.InitGame();
@@ -73,10 +85,12 @@ namespace TetrisFinal {
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.Start();
+            IsPaused_Label.IsEnabled = false;
         }
 
         private void ExecutedPauseCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.Pause();
+            IsPaused_Label.IsEnabled = true;
         }
 
         private void ExecutedExitCommand(object sender, ExecutedRoutedEventArgs e) {
