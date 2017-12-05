@@ -42,6 +42,15 @@ namespace TetrisFinal {
         //---------------------------------------Commands--------------------------------------
         private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
             this.tetris.InitGame();
+
+            Ellipse ellipse = new Ellipse();
+
+            ellipse.Width = 300 / 10;
+            ellipse.Height = 540 / 18;
+            ellipse.Stroke = Brushes.White;
+            ellipse.StrokeThickness = 2; 
+            MyCanvas.Children.Add(ellipse);
+            //ellipse.Margin = new Thickness(ellipse.Width * x, ellipse.Height * y, 0, 0);
         }
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
@@ -249,7 +258,7 @@ namespace TetrisFinal {
                 for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
                     point = game.GetPointAt(new Models.Point(column, row));
                     if (point != null)
-                        drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.White, 2), new Rect(new System.Windows.Point(point.x, point.y), new Size(30, 30)));
+                        drawingContext.DrawRectangle(Brushes.White, new Pen(Brushes.White, 2), new Rect(new System.Windows.Point(point.x * 30, point.y * 30), new Size(30, 30)));
                 }
             }
 
