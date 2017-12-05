@@ -20,59 +20,67 @@ namespace TetrisFinal {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        private Game tetris;
-        //public delegate void FSChange();
+        private Game _tetris;
 
         public MainWindow() {
             InitializeComponent();
 
-            tetris = new Game();
+            _tetris = new Game();
 
-            tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
+            _tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
         }
 
-        private void Draw() {
-            Rectangle rectangle = null;
+        private void Draw(Models.Point point) {
+            Rectangle rectangle = new Rectangle();
+            rectangle.Width = 30;
+            rectangle.Height = 30;
+            rectangle.Stroke = Brushes.White;
+            rectangle.StrokeThickness = 2;
+            rectangle.Fill = Brushes.Black;
+            rectangle.Margin = new Thickness(point.x*30, point.y*30, 0, 0);
+            MyCanvas.Children.Add(rectangle);
+        }
+
+        private void LoopGrid() {
             // Cross-thread safety
             Action action = () => {
-                rectangle = new Rectangle();
-                rectangle.Width = 30;
-                rectangle.Height = 30;
-                rectangle.Stroke = Brushes.White;
-                rectangle.StrokeThickness = 2;
-                rectangle.Fill = Brushes.Black;
-                rectangle.Margin = new Thickness(10, 10, 0, 0);
-                MyCanvas.Children.Add(rectangle);
+                MyCanvas.Children.Clear();
+                for (int row = 0; row < GameBoard.GAMEBOARD_HEIGHT; row++) {
+                    for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
+                        var point = _tetris.GetPointAt(new Models.Point(column, row));
+                        if (point != null)
+                            Draw(point);
+                    }
+                }
             };
-            
+
             var dispatcher = Application.Current.Dispatcher;
-            if(dispatcher.CheckAccess())
+            if (dispatcher.CheckAccess())
                 action();
             else
                 dispatcher.Invoke(action);
-
         }
 
         // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
         private void OnGameboardUpdate() {
-            Draw();
+            LoopGrid();
         }
 
         //---------------------------------------Commands--------------------------------------
         private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
-            this.tetris.InitGame();
+            this._tetris.InitGame();
         }
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
-            this.tetris.Start();
+            this._tetris.Start();
         }
 
         private void ExecutedPauseCommand(object sender, ExecutedRoutedEventArgs e) {
-            this.tetris.Pause();
+            this._tetris.Pause();
         }
 
         private void ExecutedExitCommand(object sender, ExecutedRoutedEventArgs e) {
-            if (MessageBox.Show("Are you sure you want to exit?", "Tetris", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to exit?", "_tetris", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 this.Close();
         }
 
@@ -86,23 +94,23 @@ namespace TetrisFinal {
         }
 
         private void ExecutedMoveLeftCommand(object sender, ExecutedRoutedEventArgs e) {
-            tetris.Move(MoveDirection.Left);
+            _tetris.Move(MoveDirection.Left);
         }
 
         private void ExecutedMoveRightCommand(object sender, ExecutedRoutedEventArgs e) {
-            tetris.Move(MoveDirection.Right);
+            _tetris.Move(MoveDirection.Right);
         }
 
         private void ExecutedRotateClockwiseCommand(object sender, ExecutedRoutedEventArgs e) {
-            tetris.RotateCurrentBlock(RotateDirection.ClockWise);
+            _tetris.RotateCurrentBlock(RotateDirection.ClockWise);
         }
 
         private void ExecutedRotateCounterClockwiseCommand(object sender, ExecutedRoutedEventArgs e) {
-            tetris.RotateCurrentBlock(RotateDirection.CounterClockWise);
+            _tetris.RotateCurrentBlock(RotateDirection.CounterClockWise);
         }
 
         private void ExecutedDropCommand(object sender, ExecutedRoutedEventArgs e) {
-            tetris.DropBlock();
+            _tetris.DropBlock();
         }
 
         //---------------------------CanExecute Commands--------------------------------------
