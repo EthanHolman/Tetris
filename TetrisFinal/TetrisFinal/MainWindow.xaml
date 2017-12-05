@@ -76,7 +76,7 @@
             </MenuItem>
         </Menu>
         <Grid HorizontalAlignment="Center" Margin="20,0,0,-20" Height="540" VerticalAlignment="Center" Width="300">
-            <Canvas  HorizontalAlignment="Center" Height="540" VerticalAlignment="Center" Width="300" Background="LightGray"></Canvas>
+            <Canvas Name="MyCanvas" HorizontalAlignment="Center" Height="540" VerticalAlignment="Center" Width="300" Background="LightGray"></Canvas>
             <Rectangle Height="30" Width="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Stroke="White" StrokeThickness="2" Fill="Red"></Rectangle>
         </Grid>
         

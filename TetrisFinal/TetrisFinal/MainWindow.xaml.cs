@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TetrisFinal.Services;
+using TetrisFinal.Models;
 
 namespace TetrisFinal {
     /// <summary>
@@ -20,9 +21,15 @@ namespace TetrisFinal {
     /// </summary>
     public partial class MainWindow : Window {
         private Game game;
+        public VisualHost host;
         public MainWindow() {
             InitializeComponent();
+
             Game tetris = new Game();
+
+            host = new VisualHost(this);
+            MyCanvas.Children.Add(host);
+
             tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
         }
 
@@ -59,23 +66,23 @@ namespace TetrisFinal {
         }
 
         private void ExecutedMoveLeftCommand(object sender, ExecutedRoutedEventArgs e) {
-
+            game.Move(MoveDirection.Left);
         }
 
         private void ExecutedMoveRightCommand(object sender, ExecutedRoutedEventArgs e) {
-
+            game.Move(MoveDirection.Right);
         }
 
         private void ExecutedRotateClockwiseCommand(object sender, ExecutedRoutedEventArgs e) {
-
+            game.RotateCurrentBlock(RotateDirection.ClockWise);
         }
 
         private void ExecutedRotateCounterClockwiseCommand(object sender, ExecutedRoutedEventArgs e) {
-
+            game.RotateCurrentBlock(RotateDirection.CounterClockWise);
         }
 
         private void ExecutedDropCommand(object sender, ExecutedRoutedEventArgs e) {
-
+            game.DropBlock();
         }
 
         //---------------------------CanExecute Commands--------------------------------------
@@ -211,6 +218,51 @@ namespace TetrisFinal {
             } else {
                 e.CanExecute = false;
             }
+        }
+    }
+
+    public class VisualHost : UIElement {
+        public VisualCollection children;
+        public Game game;
+        private MainWindow parent;
+
+        public VisualHost(MainWindow main) {
+            this.parent = main;
+            children = new VisualCollection(this);
+        }
+
+        /*
+        public void Draw(Point pt) {
+            
+        } */
+
+        public DrawingVisual CreateDrawing(int index) {
+
+            // Create an instance of a DrawingVisual.
+            DrawingVisual drawingVisual = new DrawingVisual();
+
+            // Retrieve the DrawingContext from the DrawingVisual.
+            DrawingContext drawingContext = drawingVisual.RenderOpen();
+
+            //Point point = game.GetPointAt();
+            drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.White, 3), new Rect());
+
+            drawingContext.Close();
+            return drawingVisual;
+        }
+
+            // Provide a required override for the VisualChildrenCount property.
+        protected override int VisualChildrenCount {
+            get { return children.Count; }
+        }
+
+        // Provide a required override for the GetVisualChild method.
+        protected override Visual GetVisualChild(int index) {
+            if (index < 0 || index >= children.Count) {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            return children[index];
         }
     }
 }
