@@ -34,18 +34,23 @@ namespace TetrisFinal {
         private void Draw() {
             Rectangle rectangle = null;
             // Cross-thread safety
-            if (rectangle.InvokeRequired) {
-                this.Invoke(fs, new object[] { f });
-            } else {
+            Action action = () => {
                 rectangle = new Rectangle();
                 rectangle.Width = 30;
                 rectangle.Height = 30;
                 rectangle.Stroke = Brushes.White;
                 rectangle.StrokeThickness = 2;
                 rectangle.Fill = Brushes.Black;
-                rectangle.Margin = new Thickness(10, 10,0,0);
+                rectangle.Margin = new Thickness(10, 10, 0, 0);
                 MyCanvas.Children.Add(rectangle);
-            }
+            };
+            
+            var dispatcher = Application.Current.Dispatcher;
+            if(dispatcher.CheckAccess())
+                action();
+            else
+                dispatcher.Invoke(action);
+
         }
 
         // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
