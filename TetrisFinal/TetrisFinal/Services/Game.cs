@@ -159,6 +159,11 @@ namespace TetrisFinal.Services {
 
             return false;
         }
+        
+        public void Move(MoveDirection direction) {
+            bool result = MoveCurrentBlock(direction);
+            if (result) if (_onGameboardUpdate != null) _onGameboardUpdate();
+        }
 
         public List<Point> TranslatePoints(List<Point> points, MoveDirection direction) {
             // TODO see if this works using ICloneable instead?
