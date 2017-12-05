@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace TetrisFinal.Models {
     public class Point : ICloneable {
         public int x { get; set; }
         public int y { get; set; }
-        public string Color { get; set; }
+        public SolidColorBrush Color { get; set; }
 
         public Point(int x, int y) { this.x = x; this.y = y; }
-        public Point(int x, int y, string color) { this.x = x; this.y = y; this.Color = color; }
+        public Point(int x, int y, SolidColorBrush color) { this.x = x; this.y = y; this.Color = color; }
 
         public override bool Equals(object obj) {
             if(obj == null) return false;
