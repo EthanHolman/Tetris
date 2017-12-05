@@ -21,36 +21,41 @@ namespace TetrisFinal {
     /// </summary>
     public partial class MainWindow : Window {
         private Game tetris;
-        public VisualHost host;
+        //public delegate void FSChange();
 
         public MainWindow() {
             InitializeComponent();
 
             tetris = new Game();
 
-            host = new VisualHost(tetris);
-            MyCanvas.Children.Add(host);
-
             tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
+        }
+
+        private void Draw() {
+            Rectangle rectangle = null;
+            // Cross-thread safety
+            if (rectangle.InvokeRequired) {
+                this.Invoke(fs, new object[] { f });
+            } else {
+                rectangle = new Rectangle();
+                rectangle.Width = 30;
+                rectangle.Height = 30;
+                rectangle.Stroke = Brushes.White;
+                rectangle.StrokeThickness = 2;
+                rectangle.Fill = Brushes.Black;
+                rectangle.Margin = new Thickness(10, 10,0,0);
+                MyCanvas.Children.Add(rectangle);
+            }
         }
 
         // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
         private void OnGameboardUpdate() {
-            host.CreateDrawing();
+            Draw();
         }
 
         //---------------------------------------Commands--------------------------------------
         private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
             this.tetris.InitGame();
-
-            Ellipse ellipse = new Ellipse();
-
-            ellipse.Width = 300 / 10;
-            ellipse.Height = 540 / 18;
-            ellipse.Stroke = Brushes.White;
-            ellipse.StrokeThickness = 2; 
-            MyCanvas.Children.Add(ellipse);
-            //ellipse.Margin = new Thickness(ellipse.Width * x, ellipse.Height * y, 0, 0);
         }
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
@@ -228,56 +233,6 @@ namespace TetrisFinal {
             } else {
                 e.CanExecute = false;
             }
-        }
-    }
-
-    public class VisualHost : UIElement {
-        public VisualCollection children;
-        public Game game;
-
-        public VisualHost(Game tetris) {
-            game = tetris;
-            children = new VisualCollection(this);
-        }
-
-        /*
-        public void Draw(Point pt) {
-            
-        } */
-
-        public DrawingVisual CreateDrawing() {
-
-            // Create an instance of a DrawingVisual.
-            DrawingVisual drawingVisual = new DrawingVisual();
-
-            // Retrieve the DrawingContext from the DrawingVisual.
-            DrawingContext drawingContext = drawingVisual.RenderOpen();
-
-            Models.Point point = null;
-            for (int row = 0; row < GameBoard.GAMEBOARD_HEIGHT; row++) {
-                for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
-                    point = game.GetPointAt(new Models.Point(column, row));
-                    if (point != null)
-                        drawingContext.DrawRectangle(Brushes.White, new Pen(Brushes.White, 2), new Rect(new System.Windows.Point(point.x * 30, point.y * 30), new Size(30, 30)));
-                }
-            }
-
-            drawingContext.Close();
-            return drawingVisual;
-        }
-
-            // Provide a required override for the VisualChildrenCount property.
-        protected override int VisualChildrenCount {
-            get { return children.Count; }
-        }
-
-        // Provide a required override for the GetVisualChild method.
-        protected override Visual GetVisualChild(int index) {
-            if (index < 0 || index >= children.Count) {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return children[index];
         }
     }
 }
