@@ -113,8 +113,11 @@ namespace TetrisFinal.Services {
                 }
             }
 
-            // Fire event to have GUI update
-            if (_onGameboardUpdate != null) _onGameboardUpdate();
+            CallUpdateGUI();
+        }
+
+        public Point GetPointAt(Point p) {
+            return this.Gameboard.Get(p.x, p.y);
         }
 
         public void UpdateScore(int lineCount) {
@@ -136,6 +139,14 @@ namespace TetrisFinal.Services {
             }
         }
 
+        public void DropBlock() {
+            while(MoveCurrentBlock(MoveDirection.Down)) { }
+            _currentBlock = null; // time for a new block
+            // Check for and clear any lines, updating line counts, level & score
+            ClearLines();
+            CallUpdateGUI();
+        }
+
         public void RotateCurrentBlock(RotateDirection direction) {
             if (direction == RotateDirection.ClockWise) {
                 _currentBlock.CurrentRotation++;
@@ -144,8 +155,10 @@ namespace TetrisFinal.Services {
                 _currentBlock.CurrentRotation--;
                 if (_currentBlock.CurrentRotation < 0) _currentBlock.CurrentRotation = (_currentBlock.Grid.GetLength(0) - 1);
             }
-            
+
             // TODO implement block rotation
+
+            CallUpdateGUI();
         }
 
         public bool MoveCurrentBlock(MoveDirection direction) {
@@ -162,7 +175,7 @@ namespace TetrisFinal.Services {
         
         public void Move(MoveDirection direction) {
             bool result = MoveCurrentBlock(direction);
-            if (result) if (_onGameboardUpdate != null) _onGameboardUpdate();
+            if (result) CallUpdateGUI();
         }
 
         public List<Point> TranslatePoints(List<Point> points, MoveDirection direction) {
@@ -184,6 +197,10 @@ namespace TetrisFinal.Services {
             }
 
             return modifiedPoints;
+        }
+
+        public void CallUpdateGUI() {
+            if (_onGameboardUpdate != null) _onGameboardUpdate();
         }
 
         public void AddGameboardUpdateEventHandler(GameboardUpdateEventHandler blockMove) { _onGameboardUpdate += blockMove; }
