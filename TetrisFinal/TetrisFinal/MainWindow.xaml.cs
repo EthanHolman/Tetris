@@ -36,9 +36,15 @@ namespace TetrisFinal {
             rectangle.Height = 30;
             rectangle.Stroke = Brushes.White;
             rectangle.StrokeThickness = 2;
-            rectangle.Fill = Brushes.Black;
+            rectangle.Fill = GetColor(point.Color);
             rectangle.Margin = new Thickness(point.x*30, point.y*30, 0, 0);
             MyCanvas.Children.Add(rectangle);
+        }
+
+        private SolidColorBrush GetColor(string color) {
+            if (color == "black")
+                return Brushes.Black;
+            return Brushes.Black;
         }
 
         private void LoopGrid() {
