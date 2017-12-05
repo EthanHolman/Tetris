@@ -109,6 +109,7 @@ namespace TetrisFinal.Services {
                 if (!MoveCurrentBlock(MoveDirection.Down)) {
                     _currentBlock = null; // time for a new block
 
+                    //TODO update line counts, level and score
                     // Check for and clear any lines, updating line counts, level & score
                     ClearLines();
                 }

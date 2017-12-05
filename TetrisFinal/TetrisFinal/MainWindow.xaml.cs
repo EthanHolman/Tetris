@@ -30,7 +30,7 @@ namespace TetrisFinal {
             _tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
         }
 
-        private void Draw(Models.Point point) {
+        private UIElement Draw(Models.Point point) {
             Rectangle rectangle = new Rectangle();
             rectangle.Width = 30;
             rectangle.Height = 30;
@@ -38,18 +38,18 @@ namespace TetrisFinal {
             rectangle.StrokeThickness = 2;
             rectangle.Fill = point.Color;
             rectangle.Margin = new Thickness(point.x*30, point.y*30, 0, 0);
-            MyCanvas.Children.Add(rectangle);
+            return rectangle;
         }
 
         private void LoopGrid() {
             // Cross-thread safety
             Action action = () => {
-                MyCanvas.Children.Clear();
+                MainCanvas.Children.Clear();
                 for (int row = 0; row < GameBoard.GAMEBOARD_HEIGHT; row++) {
                     for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
                         var point = _tetris.GetPointAt(new Models.Point(column, row));
                         if (point != null)
-                            Draw(point);
+                            MainCanvas.Children.Add(Draw(point));
                     }
                 }
             };
@@ -64,8 +64,10 @@ namespace TetrisFinal {
         // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
         private void OnGameboardUpdate() {
             LoopGrid();
+            // TODO implement a new method for drawing next block on other canvas
         }
 
+        // TODO make these work 
         private void UpdateScore() {
             CurScore.Content = _tetris.Score;
         }
@@ -85,12 +87,12 @@ namespace TetrisFinal {
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.Start();
-            IsPaused_Label.IsEnabled = false;
+            IsPaused_Label.Visibility = Visibility.Hidden;
         }
 
         private void ExecutedPauseCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.Pause();
-            IsPaused_Label.IsEnabled = true;
+            IsPaused_Label.Visibility = Visibility.Visible;
         }
 
         private void ExecutedExitCommand(object sender, ExecutedRoutedEventArgs e) {
@@ -98,6 +100,7 @@ namespace TetrisFinal {
                 this.Close();
         }
 
+        // TODO implement about and rules boxes
         private void ExecutedAboutCommand(object sender, ExecutedRoutedEventArgs e) {
             
         }
@@ -115,6 +118,7 @@ namespace TetrisFinal {
             _tetris.Move(MoveDirection.Right);
         }
 
+        // TODO rotation doesn't work
         private void ExecutedRotateClockwiseCommand(object sender, ExecutedRoutedEventArgs e) {
             _tetris.RotateCurrentBlock(RotateDirection.ClockWise);
         }
