@@ -43,6 +43,7 @@ namespace TetrisFinal.Services {
             LineCount = 0;
             Level = 1;
             _linesThisLevel = 0;
+            _timer.Enabled = false;
         }
 
         public void Start() {

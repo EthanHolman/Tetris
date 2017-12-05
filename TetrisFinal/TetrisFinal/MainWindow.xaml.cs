@@ -20,14 +20,15 @@ namespace TetrisFinal {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        private Game game;
+        private Game tetris;
         public VisualHost host;
+
         public MainWindow() {
             InitializeComponent();
 
-            Game tetris = new Game();
+            tetris = new Game();
 
-            host = new VisualHost(this);
+            host = new VisualHost(tetris);
             MyCanvas.Children.Add(host);
 
             tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
@@ -35,20 +36,20 @@ namespace TetrisFinal {
 
         // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
         private void OnGameboardUpdate() {
-
+            host.CreateDrawing();
         }
 
         //---------------------------------------Commands--------------------------------------
         private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
-            this.game = new Game();
+            this.tetris.InitGame();
         }
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
-            
+            this.tetris.Start();
         }
 
         private void ExecutedPauseCommand(object sender, ExecutedRoutedEventArgs e) {
-            
+            this.tetris.Pause();
         }
 
         private void ExecutedExitCommand(object sender, ExecutedRoutedEventArgs e) {
@@ -66,23 +67,23 @@ namespace TetrisFinal {
         }
 
         private void ExecutedMoveLeftCommand(object sender, ExecutedRoutedEventArgs e) {
-            game.Move(MoveDirection.Left);
+            tetris.Move(MoveDirection.Left);
         }
 
         private void ExecutedMoveRightCommand(object sender, ExecutedRoutedEventArgs e) {
-            game.Move(MoveDirection.Right);
+            tetris.Move(MoveDirection.Right);
         }
 
         private void ExecutedRotateClockwiseCommand(object sender, ExecutedRoutedEventArgs e) {
-            game.RotateCurrentBlock(RotateDirection.ClockWise);
+            tetris.RotateCurrentBlock(RotateDirection.ClockWise);
         }
 
         private void ExecutedRotateCounterClockwiseCommand(object sender, ExecutedRoutedEventArgs e) {
-            game.RotateCurrentBlock(RotateDirection.CounterClockWise);
+            tetris.RotateCurrentBlock(RotateDirection.CounterClockWise);
         }
 
         private void ExecutedDropCommand(object sender, ExecutedRoutedEventArgs e) {
-            game.DropBlock();
+            tetris.DropBlock();
         }
 
         //---------------------------CanExecute Commands--------------------------------------
@@ -224,10 +225,9 @@ namespace TetrisFinal {
     public class VisualHost : UIElement {
         public VisualCollection children;
         public Game game;
-        private MainWindow parent;
 
-        public VisualHost(MainWindow main) {
-            this.parent = main;
+        public VisualHost(Game tetris) {
+            game = tetris;
             children = new VisualCollection(this);
         }
 
@@ -236,7 +236,7 @@ namespace TetrisFinal {
             
         } */
 
-        public DrawingVisual CreateDrawing(int index) {
+        public DrawingVisual CreateDrawing() {
 
             // Create an instance of a DrawingVisual.
             DrawingVisual drawingVisual = new DrawingVisual();
@@ -244,8 +244,14 @@ namespace TetrisFinal {
             // Retrieve the DrawingContext from the DrawingVisual.
             DrawingContext drawingContext = drawingVisual.RenderOpen();
 
-            //Point point = game.GetPointAt();
-            drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.White, 3), new Rect());
+            Models.Point point = null;
+            for (int row = 0; row < GameBoard.GAMEBOARD_HEIGHT; row++) {
+                for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
+                    point = game.GetPointAt(new Models.Point(column, row));
+                    if (point != null)
+                        drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.White, 2), new Rect(new System.Windows.Point(point.x, point.y), new Size(30, 30)));
+                }
+            }
 
             drawingContext.Close();
             return drawingVisual;
