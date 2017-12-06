@@ -42,16 +42,46 @@ namespace TetrisFinal {
         }
 
         private void LoopGrid() {
+            MainCanvas.Children.Clear();
+            for (int row = 0; row < GameBoard.GAMEBOARD_HEIGHT; row++) {
+                for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
+                    var point = _tetris.GetPointAt(new Models.Point(column, row));
+                    if (point != null)
+                        MainCanvas.Children.Add(Draw(point));
+                }
+            }
+        }
+
+        public void RemovePointsAt(List<Models.Point> points) {
+            foreach(Models.Point point in points) {
+                string nameToRemove = point.x + "," + point.y;
+                MainCanvas.Children.Remove();
+                // TODO figure out how to find the point with name = nameToRemove
+            }
+        }
+
+        public void DrawPointsAt(List<Models.Point> points) {
+            foreach(Models.Point point in points) {
+                Rectangle rt = new Rectangle();
+                rt.Width = 30;
+                rt.Height = 30;
+                rt.Stroke = Brushes.White;
+                rt.StrokeThickness = 2;
+                rt.Fill = point.Color;
+                rt.Margin = new Thickness(point.x * 30, point.y * 30, 0, 0);
+                rt.Name = point.x + "," + point.y
+                MainCanvas.Children.Add(rt);
+            }
+        }
+
+        // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
+        private void OnGameboardUpdate(List<Models.Point> oldPoints, List<Models.Point> newPoints) {
+            //LoopGrid();
             // Cross-thread safety
             Action action = () => {
-                MainCanvas.Children.Clear();
-                for (int row = 0; row < GameBoard.GAMEBOARD_HEIGHT; row++) {
-                    for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
-                        var point = _tetris.GetPointAt(new Models.Point(column, row));
-                        if (point != null)
-                            MainCanvas.Children.Add(Draw(point));
-                    }
-                }
+                RemovePointsAt(oldPoints);
+                DrawPointsAt(newPoints);
+                // TODO implement a new method for drawing next block on other canvas
             };
 
             var dispatcher = Application.Current.Dispatcher;
@@ -59,12 +89,6 @@ namespace TetrisFinal {
                 action();
             else
                 dispatcher.Invoke(action);
-        }
-
-        // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
-        private void OnGameboardUpdate() {
-            LoopGrid();
-            // TODO implement a new method for drawing next block on other canvas
         }
 
         // TODO make these work 

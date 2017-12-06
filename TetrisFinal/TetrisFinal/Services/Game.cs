@@ -7,7 +7,7 @@ using System.Timers;
 using TetrisFinal.Models;
 
 namespace TetrisFinal.Services {
-    public delegate void GameboardUpdateEventHandler();
+    public delegate void GameboardUpdateEventHandler(List<Point> oldPoints, List<Point> newPoints);
     public class Game {
 
         const int BASE_POINTS = 100;
@@ -114,8 +114,7 @@ namespace TetrisFinal.Services {
                     ClearLines();
                 }
             }
-
-            CallUpdateGUI();
+            
         }
 
         public Point GetPointAt(Point p) {
@@ -139,6 +138,7 @@ namespace TetrisFinal.Services {
                 foreach (int lineNumber in lines)
                     Gameboard.RemoveLine(lineNumber);
             }
+            // TODO the gui will need to know about this event separate from the "oldPoints" "newPoints" system already in place
         }
 
         public void DropBlock() {
@@ -146,7 +146,6 @@ namespace TetrisFinal.Services {
             _currentBlock = null; // time for a new block
             // Check for and clear any lines, updating line counts, level & score
             ClearLines();
-            CallUpdateGUI();
         }
 
         public void RotateCurrentBlock(RotateDirection direction) {
@@ -180,15 +179,17 @@ namespace TetrisFinal.Services {
 
             _currentBlock.Points = newPoints;
             
-            CallUpdateGUI();
+            CallUpdateGUI(oldPoints, newPoints);
         }
 
         public bool MoveCurrentBlock(MoveDirection direction) {
+            var oldPoints = _currentBlock.Points;
             var movedPoints = TranslatePoints(_currentBlock.Points, direction);
 
             if (Gameboard.WillPointsFit(movedPoints, _currentBlock.Points)) {
                 Gameboard.MovePoints(_currentBlock.Points, movedPoints);
                 _currentBlock.Points = movedPoints;
+                CallUpdateGUI(oldPoints, movedPoints);
                 return true;
             }
 
@@ -196,8 +197,7 @@ namespace TetrisFinal.Services {
         }
         
         public void Move(MoveDirection direction) {
-            bool result = MoveCurrentBlock(direction);
-            if (result) CallUpdateGUI();
+            MoveCurrentBlock(direction);
         }
 
         public List<Point> TranslatePoints(List<Point> points, MoveDirection direction) {
@@ -221,8 +221,8 @@ namespace TetrisFinal.Services {
             return modifiedPoints;
         }
 
-        public void CallUpdateGUI() {
-            if (_onGameboardUpdate != null) _onGameboardUpdate();
+        public void CallUpdateGUI(List<Point> oldPoints, List<Point> newPoints) {
+            if (_onGameboardUpdate != null) _onGameboardUpdate(oldPoints, newPoints);
         }
 
         public void AddGameboardUpdateEventHandler(GameboardUpdateEventHandler blockMove) { _onGameboardUpdate += blockMove; }
