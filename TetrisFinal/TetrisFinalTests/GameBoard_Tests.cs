@@ -11,8 +11,8 @@ namespace TetrisFinalTests {
             GameBoard gb = new GameBoard();
             var points = new List<Point>();
             
-            gb.Set(1, 1, new Point(1, 1, "green"));
-            gb.Set(1, 2, new Point(1, 2, "green"));
+            gb.Set(1, 1, new Point(1, 1));
+            gb.Set(1, 2, new Point(1, 2));
             
             points.Add(new Point(2, 3));
             points.Add(new Point(3, 4));
@@ -25,8 +25,8 @@ namespace TetrisFinalTests {
             GameBoard gb = new GameBoard();
             var points = new List<Point>();
 
-            gb.Set(1, 1, new Point(1, 1, "green"));
-            gb.Set(1, 2, new Point(1, 2, "green"));
+            gb.Set(1, 1, new Point(1, 1));
+            gb.Set(1, 2, new Point(1, 2));
 
             points.Add(new Point(1, 1));
             points.Add(new Point(3, 4));
@@ -39,8 +39,8 @@ namespace TetrisFinalTests {
             GameBoard gb = new GameBoard();
             var points = new List<Point>();
 
-            gb.Set(1, 1, new Point(1, 1, "green"));
-            gb.Set(1, 2, new Point(1, 2, "green"));
+            gb.Set(1, 1, new Point(1, 1));
+            gb.Set(1, 2, new Point(1, 2));
 
             points.Add(new Point(-1, 2));
             points.Add(new Point(0, 4));
@@ -54,14 +54,14 @@ namespace TetrisFinalTests {
             var points = new List<Point>();
             var exemptPoints = new List<Point>();
 
-            gb.Set(1, 1, new Point(1, 1, "green"));
-            gb.Set(1, 2, new Point(1, 2, "blue"));
+            gb.Set(1, 1, new Point(1, 1));
+            gb.Set(1, 2, new Point(1, 2));
 
             points.Add(new Point(1, 2));
             points.Add(new Point(0, 4));
             points.Add(new Point(0, 5));
 
-            exemptPoints.Add(new Point(1, 2, "blue"));
+            exemptPoints.Add(new Point(1, 2));
             exemptPoints.Add(new Point(0, 0));
 
             Assert.IsTrue(gb.WillPointsFit(points, exemptPoints));
@@ -73,14 +73,14 @@ namespace TetrisFinalTests {
             var points = new List<Point>();
             var exemptPoints = new List<Point>();
 
-            gb.Set(1, 1, new Point(1, 1, "green"));
-            gb.Set(1, 2, new Point(1, 2, "blue"));
+            gb.Set(1, 1, new Point(1, 1));
+            gb.Set(1, 2, new Point(1, 2));
 
             points.Add(new Point(1, 2));
             points.Add(new Point(0, 4));
             points.Add(new Point(0, 5));
 
-            exemptPoints.Add(new Point(6, 5, "blue"));
+            exemptPoints.Add(new Point(6, 5));
             exemptPoints.Add(new Point(0, 0));
 
             Assert.IsFalse(gb.WillPointsFit(points, exemptPoints));
@@ -110,8 +110,8 @@ namespace TetrisFinalTests {
         public GameBoard ConfigureGameboardWithPoints() {
             var gb = new GameBoard();
 
-            gb.Set(1, 1, new Point(1, 1, "green"));
-            gb.Set(1, 2, new Point(1, 2, "blue"));
+            gb.Set(1, 1, new Point(1, 1));
+            gb.Set(1, 2, new Point(1, 2));
 
             return gb;
         }
@@ -120,8 +120,8 @@ namespace TetrisFinalTests {
             // Set the last two rows to be full of blocks
             GameBoard gb = new GameBoard();
             for (int i = 0; i < GameBoard.GAMEBOARD_WIDTH; i++) {
-                gb.Set(i, GameBoard.GAMEBOARD_HEIGHT - 2, new Point(i, GameBoard.GAMEBOARD_HEIGHT - 2, "yellow"));
-                gb.Set(i, GameBoard.GAMEBOARD_HEIGHT - 1, new Point(i, GameBoard.GAMEBOARD_HEIGHT - 1, "yellow"));
+                gb.Set(i, GameBoard.GAMEBOARD_HEIGHT - 2, new Point(i, GameBoard.GAMEBOARD_HEIGHT - 2));
+                gb.Set(i, GameBoard.GAMEBOARD_HEIGHT - 1, new Point(i, GameBoard.GAMEBOARD_HEIGHT - 1));
             }
 
             return gb;

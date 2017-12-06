@@ -158,8 +158,28 @@ namespace TetrisFinal.Services {
                 if (_currentBlock.CurrentRotation < 0) _currentBlock.CurrentRotation = (_currentBlock.Grid.GetLength(0) - 1);
             }
 
-            // TODO implement block rotation
+            var oldPoints = _currentBlock.Points;
+            int xMinVal = Int32.MaxValue;
+            int yMinVal = Int32.MaxValue;
 
+            foreach(Point point in oldPoints) {
+                if(point.x < xMinVal) xMinVal = point.x;
+                if(point.y < yMinVal) yMinVal = point.y;
+            }
+
+            var newPoints = new List<Point>();
+
+            for (int i = 0; i < _currentBlock.Grid.GetLength(1); i++) {
+                for (int j = 0; j < _currentBlock.Grid.GetLength(2); j++) {
+                    if (_currentBlock.Grid[_currentBlock.CurrentRotation, i, j] == 1) {
+                        // (j, i) == (x, y)
+                        newPoints.Add(new Point(xMinVal + j, yMinVal + i, _currentBlock.Color));
+                    }
+                }
+            }
+
+            _currentBlock.Points = newPoints;
+            
             CallUpdateGUI();
         }
 
