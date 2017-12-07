@@ -13,10 +13,12 @@ namespace TetrisFinal.Models {
         public int CurrentRotation { get; set; }
 
         public SquareBlock() {
-            this.Grid = new int[1, 2, 2] {
+            this.Grid = new int[1, 4, 4] {
                 {
-                    { 1, 1 },
-                    { 1, 1 }
+                    { 0, 0, 0, 0 },
+                    { 0, 1, 1, 0 },
+                    { 0, 1, 1, 0 },
+                    { 0, 0, 0, 0 }
                 }
             };
 
