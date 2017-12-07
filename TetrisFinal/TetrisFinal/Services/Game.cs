@@ -267,7 +267,10 @@ namespace TetrisFinal.Services {
         }
 
         public void Cheat_LineBlock() {
-            NextBlocks.AddFirst(new LineBlock());
+            Block block = new LineBlock();
+            block = AddPointsToBlock(block, 0);
+            NextBlocks.AddFirst(block);
+
         }
 
         public void AddGameboardUpdateEventHandler(GameboardUpdateEventHandler blockMove) { _onGameboardUpdate += blockMove; }

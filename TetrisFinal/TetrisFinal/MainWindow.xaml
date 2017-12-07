@@ -19,6 +19,7 @@
         <KeyBinding Command="{x:Static local:Commands.RotateClockwise}" Key="Down"/>
         <KeyBinding Command="{x:Static local:Commands.RotateCounterClockwise}" Key="Up"/>
         <KeyBinding Command="{x:Static local:Commands.Drop}" Key="Space"/>
+        <KeyBinding Command="{x:Static local:Commands.LineCheat}" Modifiers="Shift" Key="L"/>
     </Window.InputBindings>
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:Commands.NewGame}"
@@ -54,6 +55,9 @@
         <CommandBinding Command="{x:Static local:Commands.Drop}"
                     Executed="ExecutedDropCommand"
                     CanExecute="CanExecuteDropCommand" />
+        <CommandBinding Command="{x:Static local:Commands.LineCheat}"
+                    Executed="ExecutedLineCheatCommand"
+                    CanExecute="CanExecuteLineCheatCommand" />
     </Window.CommandBindings>
 
     <Grid Background="Black">

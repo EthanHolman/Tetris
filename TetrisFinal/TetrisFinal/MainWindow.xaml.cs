@@ -158,6 +158,11 @@ namespace TetrisFinal {
             _tetris.DropBlock();
         }
 
+        private void ExecutedLineCheatCommand(object sender, ExecutedRoutedEventArgs e) {
+            _tetris.Cheat_LineBlock();
+            SetNextBlock();
+        }
+
         //---------------------------CanExecute Commands--------------------------------------
         private void CanExecuteNewGameCommand(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -284,6 +289,16 @@ namespace TetrisFinal {
         }
 
         private void CanExecuteDropCommand(object sender, CanExecuteRoutedEventArgs e) {
+            Control target = e.Source as Control;
+
+            if (target != null && _tetris.GameRunning) {
+                e.CanExecute = true;
+            } else {
+                e.CanExecute = false;
+            }
+        }
+
+        private void CanExecuteLineCheatCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
             if (target != null && _tetris.GameRunning) {
