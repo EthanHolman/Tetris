@@ -8,6 +8,7 @@ using TetrisFinal.Models;
 
 namespace TetrisFinal.Services {
     public delegate void GameboardUpdateEventHandler();
+    public delegate void GameOverEventHandler();
     public class Game {
 
         const int BASE_POINTS = 100;
@@ -16,6 +17,7 @@ namespace TetrisFinal.Services {
         private bool _GameRunning;
         private Timer _timer;
         private event GameboardUpdateEventHandler _onGameboardUpdate;
+        private event GameOverEventHandler _onGameOver;
         private Block _currentBlock;
         private double _speed;
         private int _linesThisLevel;
@@ -47,6 +49,12 @@ namespace TetrisFinal.Services {
             _timer.Enabled = false;
             NextBlocks = new LinkedList<Block>();
             GetNextBlock(2);
+        }
+
+        public void EndGame() {
+            _GameRunning = false;
+            _timer.Enabled = false;
+            CallGameOver();
         }
 
         public void Start() {
@@ -112,7 +120,7 @@ namespace TetrisFinal.Services {
 
                 // If there's no space to add a new block then gameboard is full and game is over
                 if(!Gameboard.AddPoints(_currentBlock.Points)) {
-                    // TODO Game over
+                    EndGame();
                 }
 
             } else { // Update block positions in grid
@@ -244,6 +252,12 @@ namespace TetrisFinal.Services {
             if (_onGameboardUpdate != null) _onGameboardUpdate();
         }
 
+        public void CallGameOver() {
+            if(_onGameOver != null) _onGameOver();
+        }
+
         public void AddGameboardUpdateEventHandler(GameboardUpdateEventHandler blockMove) { _onGameboardUpdate += blockMove; }
+
+        public void AddGameOver(GameOverEventHandler gameOver) => _onGameOver += gameOver;
     }
 }
