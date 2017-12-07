@@ -100,7 +100,8 @@ namespace TetrisFinal {
         }
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            PauseGame();
+            if (GameOver_Label.Visibility == Visibility.Hidden)
+                PauseGame();
 
             if (MessageBox.Show("Are you sure you want to exit?", "Close Tetris", MessageBoxButton.YesNo) != MessageBoxResult.Yes) e.Cancel = true;
             else {

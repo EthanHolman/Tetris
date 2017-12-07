@@ -114,7 +114,7 @@ namespace TetrisFinal.Services {
                 _currentBlock.Points.Clear();
 
                 // Create initial points for this block, in reference to the gameboard
-                _currentBlock = AddPointsToBlock(_currentBlock, 4);
+                _currentBlock = AddPointsToBlock(_currentBlock, 3);
 
                 // If there's no space to add a new block then gameboard is full and game is over
                 if(!Gameboard.AddPoints(_currentBlock.Points)) {
