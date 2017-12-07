@@ -149,6 +149,9 @@ namespace TetrisFinal.Services {
         }
 
         public void RotateCurrentBlock(RotateDirection direction) {
+            if(_currentBlock == null) return;
+
+
             if (direction == RotateDirection.ClockWise) {
                 _currentBlock.CurrentRotation++;
                 if (_currentBlock.CurrentRotation >= _currentBlock.Grid.GetLength(0)) _currentBlock.CurrentRotation = 0;
