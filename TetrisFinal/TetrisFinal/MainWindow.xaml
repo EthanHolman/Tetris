@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TetrisFinal"
         mc:Ignorable="d"
+        Icon="./Services/TetrisIcon.ico"
         Title="Tetris" Height="680" Width="630" ResizeMode="NoResize" Closing="Window_Closing">
 
     <Window.InputBindings>
