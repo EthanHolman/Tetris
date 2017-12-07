@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TetrisFinal"
         mc:Ignorable="d"
-        Title="Tetris" Height="680" Width="630" ResizeMode="NoResize">
+        Title="Tetris" Height="680" Width="630" ResizeMode="NoResize" Closing="Window_Closing">
 
     <Window.InputBindings>
         <KeyBinding Command="{x:Static local:Commands.NewGame}" Modifiers="Control" Key="N"/>
@@ -66,15 +66,15 @@
             <ColumnDefinition Width="320*"/>
         </Grid.ColumnDefinitions>
         <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="625" Grid.ColumnSpan="3">
-            <MenuItem Header="File" Height="18">
+            <MenuItem Header="File" Height="25">
                 <MenuItem Header="New Game" InputGestureText="Ctrl+N" Command="{x:Static local:Commands.NewGame}"></MenuItem>
                 <MenuItem Header="Exit" InputGestureText="Ctrl+E" Command="{x:Static local:Commands.Exit}"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Game" Height="18">
+            <MenuItem Header="Game" Height="25">
                 <MenuItem Name="Start_MenuItem" Header="Start" IsEnabled="False" InputGestureText="Ctrl+G" Command="{x:Static local:Commands.Start}"></MenuItem>
                 <MenuItem Name="Pause_MenuItem" Header="Pause" IsEnabled="False" InputGestureText="Ctrl+P" Command="{x:Static local:Commands.Pause}"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Help" Height="18">
+            <MenuItem Header="Help" Height="25">
                 <MenuItem Header="About" InputGestureText="Ctrl+A" Command="{x:Static local:Commands.About}"></MenuItem>
                 <MenuItem Header="Rules" InputGestureText="Ctrl+R" Command="{x:Static local:Commands.Rules}"></MenuItem>
             </MenuItem>

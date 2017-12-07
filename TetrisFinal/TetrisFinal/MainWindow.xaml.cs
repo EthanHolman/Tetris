@@ -96,7 +96,10 @@ namespace TetrisFinal {
             else
                 dispatcher.Invoke(action);
         }
-
+        
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            if (MessageBox.Show("Are you sure you want to exit?", "_tetris", MessageBoxButton.YesNo) != MessageBoxResult.Yes) e.Cancel = true;
+        }
 
         //---------------------------------------Commands--------------------------------------
         private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
@@ -123,8 +126,7 @@ namespace TetrisFinal {
         }
 
         private void ExecutedExitCommand(object sender, ExecutedRoutedEventArgs e) {
-            if (MessageBox.Show("Are you sure you want to exit?", "_tetris", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                this.Close();
+            Close();
         }
 
         // TODO implement about and rules boxes
@@ -144,8 +146,7 @@ namespace TetrisFinal {
         private void ExecutedMoveRightCommand(object sender, ExecutedRoutedEventArgs e) {
             _tetris.Move(MoveDirection.Right);
         }
-
-        // TODO rotation doesn't work
+        
         private void ExecutedRotateClockwiseCommand(object sender, ExecutedRoutedEventArgs e) {
             _tetris.RotateCurrentBlock(RotateDirection.ClockWise);
         }
