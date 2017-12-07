@@ -5,9 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TetrisFinal"
         mc:Ignorable="d"
-        Title="Rules" Height="300" Width="300" ResizeMode="NoResize">
+        Icon="./Services/TetrisIcon.ico"
+        Title="Rules" Height="500" Width="500" ResizeMode="NoResize">
     <Grid>
-        <TextBox HorizontalAlignment="Center" Height="200" TextWrapping="Wrap" Text="" Margin="0,15,0,0" VerticalAlignment="Top" Width="260"/>
-        <Button Content="OK" HorizontalAlignment="Left" Height="25" Margin="190,230,0,0" VerticalAlignment="Top" Width="90" Click="OKButton_Click"/>
+        <RichTextBox HorizontalAlignment="Center" Height="240" Margin="0,15,0,0" VerticalAlignment="Top" Width="470">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="Here's how it works:"/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="As the blocks fall, you can move them left or right using the left/right keys. You can also rotate the blocks using the cursor up/down keys. You can drop the block by pressing the space bar."/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="The game ends if the blocks stack up to the top row of the screen. Whenever a row across the screen is filled ­in, you earn 100 points and that row is removed (and any partially filled rows above it are shifted down). When you complete more than one row at the same time, you receive a bonus of 50 points for each additional row."/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="The game advances to the next level whenever you complete 10 rows, which causes the tiles to fall 25% faster than the previous level. The points earned for completing rows grow proportional to the level number."/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        
+        <Label Content="Controls" HorizontalAlignment="Left" Margin="15,100,0,0" VerticalAlignment="Center" Height="25" Width="76" FontWeight="Bold"/>
+        
+        <Label Content="Move Left" HorizontalAlignment="Left" Margin="15,140,0,0" VerticalAlignment="Center" Height="25" Width="132"/>
+        <Label Content="Move Right" HorizontalAlignment="Left" Margin="15,180,0,0" VerticalAlignment="Center" Height="25" Width="132"/>
+        <Label Content="Rotate Clockwise" HorizontalAlignment="Left" Margin="15,220,0,0" VerticalAlignment="Center" Height="25" Width="132"/>
+        <Label Content="Rotate Counter-Clockwise" HorizontalAlignment="Left" Margin="15,260,0,0" VerticalAlignment="Center" Height="24" Width="145"/>
+        <Label Content="Drop Block" HorizontalAlignment="Left" Margin="15,300,0,0" VerticalAlignment="Center" Height="24" Width="145"/>
+        <Label Content="Left Arrow" HorizontalAlignment="Center" Margin="0,140,0,0" VerticalAlignment="Center" Height="25" Width="132" Foreground="Red"/>
+        <Label Content="Right Arrow" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Center" Height="25" Width="132" Foreground="Red"/>
+        <Label Content="Down Arrow" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Center" Height="25" Width="132" Foreground="Red"/>
+        <Label Content="Up Arrow" HorizontalAlignment="Center" Margin="15,260,0,0" VerticalAlignment="Center" Height="24" Width="145" Foreground="Red"/>
+        <Label Content="Space Bar" HorizontalAlignment="Center" Margin="15,300,0,0" VerticalAlignment="Center" Height="24" Width="145" Foreground="Red"/>
+        
+        <Button Content="OK" HorizontalAlignment="Right" Height="25" Margin="0,0,15,15" VerticalAlignment="Bottom" Width="90" Click="OKButton_Click"/>
     </Grid>
 </Window>

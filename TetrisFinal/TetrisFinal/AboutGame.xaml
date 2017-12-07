@@ -5,9 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TetrisFinal"
         mc:Ignorable="d"
+        Icon="./Services/TetrisIcon.ico"
         Title="AboutGame" Height="300" Width="300" ResizeMode="NoResize">
     <Grid>
-        <TextBox HorizontalAlignment="Center" Height="200" TextWrapping="Wrap" Text="" Margin="0,15,0,0" VerticalAlignment="Top" Width="260"/>
-        <Button Content="OK" HorizontalAlignment="Left" Height="25" Margin="190,230,0,0" VerticalAlignment="Top" Width="90" Click="OKButton_Click"/>
+        <Image HorizontalAlignment="Left" Height="30" Margin="15,15,0,0" VerticalAlignment="Top" Width="30" Source="Services/TetrisIcon.ico"/>
+        <Label Content="etris" HorizontalAlignment="Left" Height="35" Margin="30,16,0,0" VerticalAlignment="Top" Width="85" Foreground="Red" FontSize="20"/>
+        
+        <RichTextBox HorizontalAlignment="Center" Height="160" Margin="0,60,0,0" VerticalAlignment="Top" Width="270" TextChanged="RichTextBox_TextChanged">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="Created by Ethan Holman and Micalyn Williams."/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="Version 1.0"/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="VisualStudio ..."/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="..."/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button Content="OK" HorizontalAlignment="Right" Height="25" Margin="0,0,15,15" VerticalAlignment="Bottom" Width="90" Click="OKButton_Click"/>
     </Grid>
 </Window>
