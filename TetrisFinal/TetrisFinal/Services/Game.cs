@@ -82,6 +82,7 @@ namespace TetrisFinal.Services {
                     case 6: block = new ZagBlock(); break;
                 }
 
+                block = AddPointsToBlock(block, 0);
                 NextBlocks.AddLast(block);
             }
         }
@@ -107,16 +108,10 @@ namespace TetrisFinal.Services {
                 GetNextBlock(1);
                 _currentBlock = NextBlocks.ElementAt(0);
                 NextBlocks.RemoveFirst();
+                _currentBlock.Points.Clear();
 
                 // Create initial points for this block, in reference to the gameboard
-                for(int i = 0; i < _currentBlock.Grid.GetLength(1); i++) {
-                    for(int j = 0; j < _currentBlock.Grid.GetLength(2); j++) {
-                        if(_currentBlock.Grid[_currentBlock.CurrentRotation, i, j] == 1) {
-                            // (j, i) == (x, y)
-                            _currentBlock.Points.Add(new Point(j + 4, i, _currentBlock.Color));
-                        }
-                    }
-                }
+                _currentBlock = AddPointsToBlock(_currentBlock, 4);
 
                 // If there's no space to add a new block then gameboard is full and game is over
                 if(!Gameboard.AddPoints(_currentBlock.Points)) {
@@ -136,6 +131,19 @@ namespace TetrisFinal.Services {
             CheckForAndRemoveLines();
 
             CallUpdateGUI();
+        }
+
+        private Block AddPointsToBlock(Block block, int xOffset) {
+            for (int i = 0; i < block.Grid.GetLength(1); i++) {
+                for (int j = 0; j < block.Grid.GetLength(2); j++) {
+                    if (block.Grid[block.CurrentRotation, i, j] == 1) {
+                        // (j, i) == (x, y)
+                        block.Points.Add(new Point(j + xOffset, i, block.Color));
+                    }
+                }
+            }
+
+            return block;
         }
 
         public Point GetPointAt(Point p) {
