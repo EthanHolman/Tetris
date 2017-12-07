@@ -9,6 +9,8 @@ using TetrisFinal.Models;
 namespace TetrisFinal.Services {
     public delegate void GameboardUpdateEventHandler();
     public delegate void GameOverEventHandler();
+
+    [Serializable]
     public class Game {
 
         const int BASE_POINTS = 100;
