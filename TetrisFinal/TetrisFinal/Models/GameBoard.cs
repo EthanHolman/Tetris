@@ -60,9 +60,12 @@ namespace TetrisFinal.Models {
         }
 
         public void MovePoints(List<Point> from, List<Point> to) {
-            for (int i = 0; i < from.Count; i++) {
-                ClearAt(from[i]);
-                Set(to[i].x, to[i].y, to[i]);
+            foreach(Point p in from) {
+                ClearAt(p);
+            }
+
+            foreach(Point p in to) {
+                Set(p.x, p.y, p);
             }
         }
         

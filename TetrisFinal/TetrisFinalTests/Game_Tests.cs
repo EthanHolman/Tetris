@@ -72,5 +72,28 @@ namespace TetrisFinalTests {
                 Assert.AreEqual(pointsShouldBe_right[i], points_right[i]);
             }
         }
+
+        [TestMethod]
+        public void TranslatePoints() {
+            var oldPoints = new List<Point>();
+            var newPoints = new List<Point>();
+            Game g = new Game();
+            g.InitGame();
+
+            oldPoints.Add(new Point(2, 1));
+            oldPoints.Add(new Point(2, 2));
+            oldPoints.Add(new Point(3, 1));
+            oldPoints.Add(new Point(3, 2));
+
+            newPoints.Add(new Point(2, 2));
+            newPoints.Add(new Point(2, 3));
+            newPoints.Add(new Point(3, 2));
+            newPoints.Add(new Point(3, 3));
+
+            var result = g.TranslatePoints(oldPoints, MoveDirection.Down);
+            for (int i = 0; i < result.Count; i++) {
+                Assert.AreEqual(newPoints[i], result[i]);
+            }
+        }
     }
 }
