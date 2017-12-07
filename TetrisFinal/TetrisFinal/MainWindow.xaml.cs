@@ -28,6 +28,7 @@ namespace TetrisFinal {
             _tetris = new Game();
 
             _tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
+            _tetris.AddGameOver(OnGameOver);
         }
 
         private UIElement Draw(Models.Point point) {
@@ -61,6 +62,12 @@ namespace TetrisFinal {
             }
         }
 
+        private void UpdateLevelInfo() {
+            CurScore.Content = _tetris.Score;
+            CurLevel.Content = _tetris.Level;
+            CurLines.Content = _tetris.LineCount;
+        }
+
         // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
         private void OnGameboardUpdate() {
             // Cross-thread safety
@@ -77,18 +84,28 @@ namespace TetrisFinal {
                 dispatcher.Invoke(action);
         }
 
-        // TODO make these work 
-        private void UpdateLevelInfo() {
-            CurScore.Content = _tetris.Score;
-            CurLevel.Content = _tetris.Level;
-            CurLines.Content = _tetris.LineCount;
+        private void OnGameOver() {
+            // Cross-thread safety
+            Action action = () => {
+                GameOver_Label.Visibility = Visibility.Visible;
+            };
+
+            var dispatcher = Application.Current.Dispatcher;
+            if (dispatcher.CheckAccess())
+                action();
+            else
+                dispatcher.Invoke(action);
         }
 
 
         //---------------------------------------Commands--------------------------------------
         private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.InitGame();
+            MainCanvas.Children.Clear();
+            NextBlockCanvas.Children.Clear();
             Start_MenuItem.IsEnabled = true;
+            Pause_MenuItem.IsEnabled = false;
+            GameOver_Label.Visibility = Visibility.Hidden;
         }
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {

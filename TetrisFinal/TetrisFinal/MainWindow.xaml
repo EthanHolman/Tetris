@@ -92,5 +92,6 @@
         <Label Name="CurLevel" Content="0" Grid.Column="1" FontSize="30" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,0,0,40" VerticalAlignment="Bottom"/>
         
         <Label Name="IsPaused_Label" Visibility="Hidden" Content="Paused" Grid.ColumnSpan="2" FontSize="100" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Name="GameOver_Label" Visibility="Hidden" Content="GAME OVER" Grid.ColumnSpan="2" FontSize="80" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>
