@@ -9,6 +9,8 @@
 
     <Window.InputBindings>
         <KeyBinding Command="{x:Static local:Commands.NewGame}" Modifiers="Control" Key="N"/>
+        <KeyBinding Command="{x:Static local:Commands.Save}" Modifiers="Control" Key="S"/>
+        <KeyBinding Command="{x:Static local:Commands.Load}" Modifiers="Control" Key="L"/>
         <KeyBinding Command="{x:Static local:Commands.Start}" Modifiers="Control" Key="G"/>
         <KeyBinding Command="{x:Static local:Commands.Pause}" Modifiers="Control" Key="P"/>
         <KeyBinding Command="{x:Static local:Commands.Exit}" Modifiers="Control" Key="E"/>
@@ -25,6 +27,12 @@
         <CommandBinding Command="{x:Static local:Commands.NewGame}"
                     Executed="ExecutedNewGameCommand"
                     CanExecute="CanExecuteNewGameCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Save}"
+                    Executed="ExecutedSaveCommand"
+                    CanExecute="CanExecuteSaveCommand" />
+        <CommandBinding Command="{x:Static local:Commands.Load}"
+                    Executed="ExecutedLoadCommand"
+                    CanExecute="CanExecuteLoadCommand" />
         <CommandBinding Command="{x:Static local:Commands.Start}"
                     Executed="ExecutedStartCommand"
                     CanExecute="CanExecuteStartCommand" />
@@ -68,11 +76,13 @@
         <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="625" Grid.ColumnSpan="3">
             <MenuItem Header="File" Height="25">
                 <MenuItem Header="New Game" InputGestureText="Ctrl+N" Command="{x:Static local:Commands.NewGame}"></MenuItem>
+                <MenuItem Header="Save" InputGestureText="Ctrl+S" Command="{x:Static local:Commands.Save}"></MenuItem>
+                <MenuItem Header="Load" InputGestureText="Ctrl+L" Command="{x:Static local:Commands.Load}"></MenuItem>
                 <MenuItem Header="Exit" InputGestureText="Ctrl+E" Command="{x:Static local:Commands.Exit}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Game" Height="25">
-                <MenuItem Name="Start_MenuItem" Header="Start" IsEnabled="False" InputGestureText="Ctrl+G" Command="{x:Static local:Commands.Start}"></MenuItem>
-                <MenuItem Name="Pause_MenuItem" Header="Pause" IsEnabled="False" InputGestureText="Ctrl+P" Command="{x:Static local:Commands.Pause}"></MenuItem>
+                <MenuItem x:Name="Start_MenuItem" Header="Start" IsEnabled="False" InputGestureText="Ctrl+G" Command="{x:Static local:Commands.Start}"></MenuItem>
+                <MenuItem x:Name="Pause_MenuItem" Header="Pause" IsEnabled="False" InputGestureText="Ctrl+P" Command="{x:Static local:Commands.Pause}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help" Height="25">
                 <MenuItem Header="About" InputGestureText="Ctrl+A" Command="{x:Static local:Commands.About}"></MenuItem>
@@ -80,22 +90,22 @@
             </MenuItem>
         </Menu>
         <Grid HorizontalAlignment="Center" Margin="20,0,0,-20" Height="540" VerticalAlignment="Center" Width="300">
-            <Canvas Name="MainCanvas" HorizontalAlignment="Center" Height="540" VerticalAlignment="Center" Width="300" Background="LightGray"></Canvas>
+            <Canvas x:Name="MainCanvas" HorizontalAlignment="Center" Height="540" VerticalAlignment="Center" Width="300" Background="LightGray"></Canvas>
         </Grid>
         
         <Label Content="Next Block" Grid.Column="1" FontSize="30" Foreground="Blue" HorizontalAlignment="Center" Margin="0,60,0,0" VerticalAlignment="Top"/>
-        <Canvas Name="NextBlockCanvas" Background="LightGray" Grid.Column="1" Width="120" Height="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,140,85,0"></Canvas>
+        <Canvas x:Name="NextBlockCanvas" Background="LightGray" Grid.Column="1" Width="120" Height="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,140,85,0"></Canvas>
         
         <Label Content="Score" Grid.Column="1" FontSize="20" Foreground="LightGreen" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"/>
-        <Label Name="CurScore" Content="0" Grid.Column="1" FontSize="30" Foreground="LightGreen" HorizontalAlignment="Center" Margin="0,80,0,0" VerticalAlignment="Center"/>
+        <Label x:Name="CurScore" Content="0" Grid.Column="1" FontSize="30" Foreground="LightGreen" HorizontalAlignment="Center" Margin="0,80,0,0" VerticalAlignment="Center"/>
 
         <Label Content="Lines" Grid.Column="1" FontSize="20" Foreground="Yellow" HorizontalAlignment="Center" Margin="0,0,0,190" VerticalAlignment="Bottom"/>
-        <Label Name="CurLines" Content="0" Grid.Column="1" FontSize="30" Foreground="Yellow" HorizontalAlignment="Center" Margin="0,0,0,145" VerticalAlignment="Bottom"/>
+        <Label x:Name="CurLines" Content="0" Grid.Column="1" FontSize="30" Foreground="Yellow" HorizontalAlignment="Center" Margin="0,0,0,145" VerticalAlignment="Bottom"/>
 
         <Label Content="Level" Grid.Column="1" FontSize="20" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,0,0,85" VerticalAlignment="Bottom"/>
-        <Label Name="CurLevel" Content="0" Grid.Column="1" FontSize="30" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,0,0,40" VerticalAlignment="Bottom"/>
+        <Label x:Name="CurLevel" Content="0" Grid.Column="1" FontSize="30" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,0,0,40" VerticalAlignment="Bottom"/>
         
-        <Label Name="IsPaused_Label" Visibility="Hidden" Content="Paused" Grid.ColumnSpan="2" FontSize="100" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Name="GameOver_Label" Visibility="Hidden" Content="GAME OVER" Grid.ColumnSpan="2" FontSize="80" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label x:Name="IsPaused_Label" Visibility="Hidden" Content="Paused" Grid.ColumnSpan="2" FontSize="100" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label x:Name="GameOver_Label" Visibility="Hidden" Content="GAME OVER" Grid.ColumnSpan="2" FontSize="80" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

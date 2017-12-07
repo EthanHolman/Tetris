@@ -10,6 +10,8 @@ namespace TetrisFinal
     public static class Commands {
         public static readonly RoutedCommand NewGame = new RoutedCommand();
         public static readonly RoutedCommand Start = new RoutedCommand();
+        public static readonly RoutedCommand Save = new RoutedCommand();
+        public static readonly RoutedCommand Load = new RoutedCommand();
         public static readonly RoutedCommand Pause = new RoutedCommand();
         public static readonly RoutedCommand Exit = new RoutedCommand();
         public static readonly RoutedCommand About = new RoutedCommand();
