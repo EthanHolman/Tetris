@@ -21,6 +21,8 @@ namespace TetrisFinal {
     /// </summary>
     public partial class MainWindow : Window {
         private Game _tetris;
+        private Window _about;
+        private Window _rules;
 
         public MainWindow() {
             InitializeComponent();
@@ -98,7 +100,11 @@ namespace TetrisFinal {
         }
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            if (MessageBox.Show("Are you sure you want to exit?", "_tetris", MessageBoxButton.YesNo) != MessageBoxResult.Yes) e.Cancel = true;
+            if (MessageBox.Show("Are you sure you want to exit?", "Close Tetris", MessageBoxButton.YesNo) != MessageBoxResult.Yes) e.Cancel = true;
+            else {
+                if (_about != null) _about.Close();
+                if (_rules != null) _rules.Close();
+            }
         }
 
         //---------------------------------------Commands--------------------------------------
@@ -143,12 +149,14 @@ namespace TetrisFinal {
 
         // TODO implement about and rules boxes
         private void ExecutedAboutCommand(object sender, ExecutedRoutedEventArgs e) {
-            
+            if (_about == null) _about = new AboutGame();
+            _about.Show();
         }
 
         private void ExecutedRulesCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            
+            if (_rules == null) _rules = new Rules();
+            _rules.Show();
         }
 
         private void ExecutedMoveLeftCommand(object sender, ExecutedRoutedEventArgs e) {

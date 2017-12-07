@@ -91,7 +91,7 @@
             </MenuItem>
             <MenuItem Header="Help" Height="25">
                 <MenuItem Header="About" InputGestureText="Ctrl+A" Command="{x:Static local:Commands.About}"></MenuItem>
-                <MenuItem Header="Rules" InputGestureText="Ctrl+R" Command="{x:Static local:Commands.Rules}"></MenuItem>
+                <MenuItem Header="Rules" InputGestureText="Ctrl+H" Command="{x:Static local:Commands.Rules}"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid HorizontalAlignment="Center" Margin="20,0,0,-20" Height="540" VerticalAlignment="Center" Width="300">

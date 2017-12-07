@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TetrisFinal"
         mc:Ignorable="d"
-        Title="AboutGame" Height="300" Width="300">
+        Title="AboutGame" Height="300" Width="300" ResizeMode="NoResize">
     <Grid>
-        
+        <TextBox HorizontalAlignment="Center" Height="200" TextWrapping="Wrap" Text="" Margin="0,15,0,0" VerticalAlignment="Top" Width="260"/>
+        <Button Content="OK" HorizontalAlignment="Left" Height="25" Margin="190,230,0,0" VerticalAlignment="Top" Width="90" Click="OKButton_Click"/>
     </Grid>
 </Window>

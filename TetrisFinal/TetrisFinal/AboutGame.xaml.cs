@@ -20,5 +20,9 @@ namespace TetrisFinal {
         public AboutGame() {
             InitializeComponent();
         }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e) {
+            this.Hide();
+        }
     }
 }
