@@ -53,6 +53,7 @@ namespace TetrisFinal {
         }
 
         private void SetNextBlock() {
+            NextBlockCanvas.Children.Clear();
             var blockPoints = _tetris.GetNextBlock().Points;
             foreach (Models.Point pt in blockPoints) {
                 if (pt != null)
@@ -66,6 +67,7 @@ namespace TetrisFinal {
             Action action = () => {
                 LoopGrid();
                 SetNextBlock();
+                UpdateLevelInfo();
             };
 
             var dispatcher = Application.Current.Dispatcher;
@@ -76,15 +78,10 @@ namespace TetrisFinal {
         }
 
         // TODO make these work 
-        private void UpdateScore() {
+        private void UpdateLevelInfo() {
             CurScore.Content = _tetris.Score;
-        }
-
-        private void UpdateLines() {
-            CurLines.Content = _tetris.LineCount;
-        }
-        private void UpdateLevel() {
             CurLevel.Content = _tetris.Level;
+            CurLines.Content = _tetris.LineCount;
         }
 
 
@@ -232,7 +229,7 @@ namespace TetrisFinal {
         private void CanExecuteMoveLeftCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
-            if (target != null) {
+            if (target != null && _tetris.GameRunning) {
                 e.CanExecute = true;
             } else {
                 e.CanExecute = false;
@@ -242,7 +239,7 @@ namespace TetrisFinal {
         private void CanExecuteMoveRightCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
-            if (target != null) {
+            if (target != null && _tetris.GameRunning) {
                 e.CanExecute = true;
             } else {
                 e.CanExecute = false;
@@ -252,7 +249,7 @@ namespace TetrisFinal {
         private void CanExecuteRotateClockwiseCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
-            if (target != null) {
+            if (target != null && _tetris.GameRunning) {
                 e.CanExecute = true;
             } else {
                 e.CanExecute = false;
@@ -262,7 +259,7 @@ namespace TetrisFinal {
         private void CanExecuteRotateCounterClockwiseCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
-            if (target != null) {
+            if (target != null && _tetris.GameRunning) {
                 e.CanExecute = true;
             } else {
                 e.CanExecute = false;
@@ -272,7 +269,7 @@ namespace TetrisFinal {
         private void CanExecuteDropCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
-            if (target != null) {
+            if (target != null && _tetris.GameRunning) {
                 e.CanExecute = true;
             } else {
                 e.CanExecute = false;
