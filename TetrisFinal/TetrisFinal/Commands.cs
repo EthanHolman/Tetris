@@ -22,5 +22,6 @@ namespace TetrisFinal
         public static readonly RoutedCommand RotateCounterClockwise = new RoutedCommand();
         public static readonly RoutedCommand Drop = new RoutedCommand();
         public static readonly RoutedCommand LineCheat = new RoutedCommand();
+        public static readonly RoutedCommand HomeCheat = new RoutedCommand();
     }
 }
