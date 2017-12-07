@@ -112,17 +112,11 @@ namespace TetrisFinal {
         }
 
         private void ExecutedSaveCommand(object sender, ExecutedRoutedEventArgs e) {
-            this._tetris.Pause();
-            IsPaused_Label.Visibility = Visibility.Visible;
-            Pause_MenuItem.IsEnabled = false;
-            Start_MenuItem.IsEnabled = true;
+            
         }
 
         private void ExecutedLoadCommand(object sender, ExecutedRoutedEventArgs e) {
-            this._tetris.Pause();
-            IsPaused_Label.Visibility = Visibility.Visible;
-            Pause_MenuItem.IsEnabled = false;
-            Start_MenuItem.IsEnabled = true;
+            
         }
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
@@ -130,6 +124,8 @@ namespace TetrisFinal {
             IsPaused_Label.Visibility = Visibility.Hidden;
             Pause_MenuItem.IsEnabled = true;
             Start_MenuItem.IsEnabled = false;
+            Save_MenuItem.IsEnabled = false;
+            Load_MenuItem.IsEnabled = false;
         }
 
         private void ExecutedPauseCommand(object sender, ExecutedRoutedEventArgs e) {
@@ -137,6 +133,8 @@ namespace TetrisFinal {
             IsPaused_Label.Visibility = Visibility.Visible;
             Pause_MenuItem.IsEnabled = false;
             Start_MenuItem.IsEnabled = true;
+            Save_MenuItem.IsEnabled = true;
+            Load_MenuItem.IsEnabled = true;
         }
 
         private void ExecutedExitCommand(object sender, ExecutedRoutedEventArgs e) {

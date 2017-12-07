@@ -81,8 +81,8 @@
         <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="625" Grid.ColumnSpan="3">
             <MenuItem Header="File" Height="25">
                 <MenuItem Header="New Game" InputGestureText="Ctrl+N" Command="{x:Static local:Commands.NewGame}"></MenuItem>
-                <MenuItem Header="Save" InputGestureText="Ctrl+S" Command="{x:Static local:Commands.Save}"></MenuItem>
-                <MenuItem Header="Load" InputGestureText="Ctrl+L" Command="{x:Static local:Commands.Load}"></MenuItem>
+                <MenuItem x:Name="Save_MenuItem" Header="Save" IsEnabled="False" InputGestureText="Ctrl+S" Command="{x:Static local:Commands.Save}"></MenuItem>
+                <MenuItem x:Name="Load_MenuItem" Header="Load" InputGestureText="Ctrl+L" Command="{x:Static local:Commands.Load}"></MenuItem>
                 <MenuItem Header="Exit" InputGestureText="Ctrl+E" Command="{x:Static local:Commands.Exit}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Game" Height="25">
