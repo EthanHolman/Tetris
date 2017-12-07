@@ -67,8 +67,8 @@
                 <MenuItem Header="Exit" InputGestureText="Ctrl+E" Command="{x:Static local:Commands.Exit}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Game">
-                <MenuItem Header="Start" InputGestureText="Ctrl+G" Command="{x:Static local:Commands.Start}"></MenuItem>
-                <MenuItem Header="Pause" InputGestureText="Ctrl+P" Command="{x:Static local:Commands.Pause}"></MenuItem>
+                <MenuItem Name="Start_MenuItem" Header="Start" IsEnabled="False" InputGestureText="Ctrl+G" Command="{x:Static local:Commands.Start}"></MenuItem>
+                <MenuItem Name="Pause_MenuItem" Header="Pause" IsEnabled="False" InputGestureText="Ctrl+P" Command="{x:Static local:Commands.Pause}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" InputGestureText="Ctrl+A" Command="{x:Static local:Commands.About}"></MenuItem>

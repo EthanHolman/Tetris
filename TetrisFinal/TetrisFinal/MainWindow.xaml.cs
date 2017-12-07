@@ -42,16 +42,21 @@ namespace TetrisFinal {
         }
 
         private void LoopGrid() {
+            MainCanvas.Children.Clear();
+            for (int row = 0; row < GameBoard.GAMEBOARD_HEIGHT; row++) {
+                for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
+                    var point = _tetris.GetPointAt(new Models.Point(column, row));
+                    if (point != null)
+                        MainCanvas.Children.Add(Draw(point));
+                }
+            }
+        }
+
+        // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
+        private void OnGameboardUpdate() {
             // Cross-thread safety
             Action action = () => {
-                MainCanvas.Children.Clear();
-                for (int row = 0; row < GameBoard.GAMEBOARD_HEIGHT; row++) {
-                    for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
-                        var point = _tetris.GetPointAt(new Models.Point(column, row));
-                        if (point != null)
-                            MainCanvas.Children.Add(Draw(point));
-                    }
-                }
+                LoopGrid();
             };
 
             var dispatcher = Application.Current.Dispatcher;
@@ -59,11 +64,6 @@ namespace TetrisFinal {
                 action();
             else
                 dispatcher.Invoke(action);
-        }
-
-        // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
-        private void OnGameboardUpdate() {
-            LoopGrid();
             // TODO implement a new method for drawing next block on other canvas
         }
 
@@ -83,16 +83,21 @@ namespace TetrisFinal {
         //---------------------------------------Commands--------------------------------------
         private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.InitGame();
+            Start_MenuItem.IsEnabled = true;
         }
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.Start();
             IsPaused_Label.Visibility = Visibility.Hidden;
+            Pause_MenuItem.IsEnabled = true;
+            Start_MenuItem.IsEnabled = false;
         }
 
         private void ExecutedPauseCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.Pause();
             IsPaused_Label.Visibility = Visibility.Visible;
+            Pause_MenuItem.IsEnabled = false;
+            Start_MenuItem.IsEnabled = true;
         }
 
         private void ExecutedExitCommand(object sender, ExecutedRoutedEventArgs e) {
