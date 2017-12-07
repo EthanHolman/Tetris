@@ -52,11 +52,20 @@ namespace TetrisFinal {
             }
         }
 
+        private void SetNextBlock() {
+            var blockPoints = _tetris.GetNextBlock().Points;
+            foreach (Models.Point pt in blockPoints) {
+                if (pt != null)
+                    NextBlockCanvas.Children.Add(Draw(pt));
+            }
+        }
+
         // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
         private void OnGameboardUpdate() {
             // Cross-thread safety
             Action action = () => {
                 LoopGrid();
+                SetNextBlock();
             };
 
             var dispatcher = Application.Current.Dispatcher;
@@ -64,7 +73,6 @@ namespace TetrisFinal {
                 action();
             else
                 dispatcher.Invoke(action);
-            // TODO implement a new method for drawing next block on other canvas
         }
 
         // TODO make these work 
