@@ -87,6 +87,15 @@ namespace TetrisFinal.Models {
         public void RemoveLine(int index) {
             _board.Remove(_board.ElementAt(index));
             _board.AddFirst(new Point[GAMEBOARD_WIDTH]);
+            UpdateBlockCoords(index);
+        }
+
+        private void UpdateBlockCoords(int toLineNum) {
+            for (int i = 0; i <= toLineNum; i++) {
+
+                foreach (Point point in _board.ElementAt(i))
+                    if (point != null) point.y++;
+            }
         }
     }
 }

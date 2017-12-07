@@ -108,12 +108,12 @@ namespace TetrisFinal.Services {
                 // If block can't move down, then it's hit bottom
                 if (!MoveCurrentBlock(MoveDirection.Down)) {
                     _currentBlock = null; // time for a new block
-
-                    //TODO update line counts, level and score
-                    // Check for and clear any lines, updating line counts, level & score
-                    ClearLines();
                 }
             }
+
+            //TODO update line counts, level and score
+            // Check for and clear any lines, updating line counts, level & score
+            CheckForAndRemoveLines();
 
             CallUpdateGUI();
         }
@@ -126,7 +126,7 @@ namespace TetrisFinal.Services {
             Score += ((BASE_POINTS * lineCount) + (50 * (lineCount - 1))) * Level;
         }
 
-        public void ClearLines() {
+        public void CheckForAndRemoveLines() {
             var lines = Gameboard.FindLines();
 
             if (lines.Count > 0) {
@@ -145,7 +145,7 @@ namespace TetrisFinal.Services {
             while(MoveCurrentBlock(MoveDirection.Down)) { }
             _currentBlock = null; // time for a new block
             // Check for and clear any lines, updating line counts, level & score
-            ClearLines();
+            CheckForAndRemoveLines();
             CallUpdateGUI();
         }
 
@@ -180,12 +180,17 @@ namespace TetrisFinal.Services {
                 }
             }
 
-            _currentBlock.Points = newPoints;
-            
-            CallUpdateGUI();
+            if(Gameboard.WillPointsFit(newPoints, oldPoints)) {
+                Gameboard.MovePoints(oldPoints, newPoints);
+                _currentBlock.Points = newPoints;
+
+                CallUpdateGUI();
+            }
         }
 
         public bool MoveCurrentBlock(MoveDirection direction) {
+            if (_currentBlock == null) return false;
+
             var movedPoints = TranslatePoints(_currentBlock.Points, direction);
 
             if (Gameboard.WillPointsFit(movedPoints, _currentBlock.Points)) {
@@ -198,8 +203,6 @@ namespace TetrisFinal.Services {
         }
         
         public void Move(MoveDirection direction) {
-            if (_currentBlock == null) return;
-
             bool result = MoveCurrentBlock(direction);
             if (result) CallUpdateGUI();
         }
