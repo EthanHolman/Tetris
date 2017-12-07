@@ -42,7 +42,7 @@ namespace TetrisFinal {
         }
 
         private void LoopGrid() {
-            MainCanvas.Children.Clear();
+            //MainCanvas.Children.Clear();
             for (int row = 0; row < GameBoard.GAMEBOARD_HEIGHT; row++) {
                 for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
                     var point = _tetris.GetPointAt(new Models.Point(column, row));
@@ -54,9 +54,8 @@ namespace TetrisFinal {
 
         public void RemovePointsAt(List<Models.Point> points) {
             foreach(Models.Point point in points) {
-                string nameToRemove = point.x + "," + point.y;
-                MainCanvas.Children.Remove();
-                // TODO figure out how to find the point with name = nameToRemove
+                if (MainCanvas.Children.Count > 0)
+                    MainCanvas.Children.RemoveAt(MainCanvas.Children.Count-1);
             }
         }
 
@@ -69,7 +68,6 @@ namespace TetrisFinal {
                 rt.StrokeThickness = 2;
                 rt.Fill = point.Color;
                 rt.Margin = new Thickness(point.x * 30, point.y * 30, 0, 0);
-                rt.Name = point.x + "," + point.y
                 MainCanvas.Children.Add(rt);
             }
         }
