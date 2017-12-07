@@ -28,6 +28,7 @@ namespace TetrisFinal {
             _tetris = new Game();
 
             _tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
+            _tetris.AddGameOver(OnGameOver);
         }
 
         private UIElement Draw(Models.Point point) {
@@ -53,11 +54,18 @@ namespace TetrisFinal {
         }
 
         private void SetNextBlock() {
+            NextBlockCanvas.Children.Clear();
             var blockPoints = _tetris.GetNextBlock().Points;
             foreach (Models.Point pt in blockPoints) {
                 if (pt != null)
                     NextBlockCanvas.Children.Add(Draw(pt));
             }
+        }
+
+        private void UpdateLevelInfo() {
+            CurScore.Content = _tetris.Score;
+            CurLevel.Content = _tetris.Level;
+            CurLines.Content = _tetris.LineCount;
         }
 
         // This method will get called when the GameBoard gets updated (blocks move, line detected, etc)
@@ -66,6 +74,7 @@ namespace TetrisFinal {
             Action action = () => {
                 LoopGrid();
                 SetNextBlock();
+                UpdateLevelInfo();
             };
 
             var dispatcher = Application.Current.Dispatcher;
@@ -75,23 +84,28 @@ namespace TetrisFinal {
                 dispatcher.Invoke(action);
         }
 
-        // TODO make these work 
-        private void UpdateScore() {
-            CurScore.Content = _tetris.Score;
-        }
+        private void OnGameOver() {
+            // Cross-thread safety
+            Action action = () => {
+                GameOver_Label.Visibility = Visibility.Visible;
+            };
 
-        private void UpdateLines() {
-            CurLines.Content = _tetris.LineCount;
-        }
-        private void UpdateLevel() {
-            CurLevel.Content = _tetris.Level;
+            var dispatcher = Application.Current.Dispatcher;
+            if (dispatcher.CheckAccess())
+                action();
+            else
+                dispatcher.Invoke(action);
         }
 
 
         //---------------------------------------Commands--------------------------------------
         private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.InitGame();
+            MainCanvas.Children.Clear();
+            NextBlockCanvas.Children.Clear();
             Start_MenuItem.IsEnabled = true;
+            Pause_MenuItem.IsEnabled = false;
+            GameOver_Label.Visibility = Visibility.Hidden;
         }
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
@@ -232,7 +246,7 @@ namespace TetrisFinal {
         private void CanExecuteMoveLeftCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
-            if (target != null) {
+            if (target != null && _tetris.GameRunning) {
                 e.CanExecute = true;
             } else {
                 e.CanExecute = false;
@@ -242,7 +256,7 @@ namespace TetrisFinal {
         private void CanExecuteMoveRightCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
-            if (target != null) {
+            if (target != null && _tetris.GameRunning) {
                 e.CanExecute = true;
             } else {
                 e.CanExecute = false;
@@ -252,7 +266,7 @@ namespace TetrisFinal {
         private void CanExecuteRotateClockwiseCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
-            if (target != null) {
+            if (target != null && _tetris.GameRunning) {
                 e.CanExecute = true;
             } else {
                 e.CanExecute = false;
@@ -262,7 +276,7 @@ namespace TetrisFinal {
         private void CanExecuteRotateCounterClockwiseCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
-            if (target != null) {
+            if (target != null && _tetris.GameRunning) {
                 e.CanExecute = true;
             } else {
                 e.CanExecute = false;
@@ -272,7 +286,7 @@ namespace TetrisFinal {
         private void CanExecuteDropCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
 
-            if (target != null) {
+            if (target != null && _tetris.GameRunning) {
                 e.CanExecute = true;
             } else {
                 e.CanExecute = false;
