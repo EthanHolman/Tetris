@@ -26,7 +26,8 @@ namespace TetrisFinal {
         }
 
         public void UpdateHighScore(int newScore) {
-            if (CurHighScore_Label.Content.ToString().CompareTo(newScore.ToString()) < 0) {
+            int curHighScore = Int32.Parse(CurHighScore_Label.Content.ToString());
+            if (curHighScore < newScore) {
                 CurHighScore_Label.Content = newScore;
                 MessageBox.Show("New High Score!");
             }
