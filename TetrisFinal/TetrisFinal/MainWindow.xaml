@@ -107,8 +107,8 @@
         <Label Content="Lines" Grid.Column="1" FontSize="20" Foreground="Yellow" HorizontalAlignment="Center" Margin="0,0,0,190" VerticalAlignment="Bottom"/>
         <Label x:Name="CurLines" Content="0" Grid.Column="1" FontSize="30" Foreground="Yellow" HorizontalAlignment="Center" Margin="0,0,0,145" VerticalAlignment="Bottom"/>
 
-        <Label Content="Level" Grid.Column="1" FontSize="20" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,0,0,85" VerticalAlignment="Bottom"/>
-        <Label x:Name="CurLevel" Content="0" Grid.Column="1" FontSize="30" Foreground="MediumOrchid" HorizontalAlignment="Center" Margin="0,0,0,40" VerticalAlignment="Bottom"/>
+        <Label Content="Level" Grid.Column="1" FontSize="20" Foreground="DarkViolet" HorizontalAlignment="Center" Margin="0,0,0,85" VerticalAlignment="Bottom"/>
+        <Label x:Name="CurLevel" Content="0" Grid.Column="1" FontSize="30" Foreground="DarkViolet" HorizontalAlignment="Center" Margin="0,0,0,40" VerticalAlignment="Bottom"/>
         
         <Label x:Name="IsPaused_Label" Visibility="Hidden" Content="Paused" Grid.ColumnSpan="2" FontSize="100" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Label x:Name="GameOver_Label" Visibility="Hidden" Content="GAME OVER" Grid.ColumnSpan="2" FontSize="80" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>

@@ -15,28 +15,28 @@ namespace TetrisFinal.Models {
         public L2Block() {
             this.Grid = new int[4, 3, 3] {
                 {
-                    { 0, 0, 1 },
-                    { 0, 0, 1 },
-                    { 0, 1, 1 }
+                    { 0, 1, 0 },
+                    { 0, 1, 0 },
+                    { 1, 1, 0 }
+                },
+                {
+                    { 1, 0, 0 },
+                    { 1, 1, 1 },
+                    { 0, 0, 0 }
+                },
+                {
+                    { 0, 1, 1 },
+                    { 0, 1, 0 },
+                    { 0, 1, 0 }
                 },
                 {
                     { 0, 0, 0 },
-                    { 1, 0, 0 },
-                    { 1, 1, 1 }
-                },
-                {
-                    { 1, 1, 0 },
-                    { 1, 0, 0 },
-                    { 1, 0, 0 }
-                },
-                {
                     { 1, 1, 1 },
-                    { 0, 0, 1 },
-                    { 0, 0, 0 }
+                    { 0, 0, 1 }
                 }
             };
 
-            this.Color = Brushes.Tan;
+            this.Color = Brushes.DarkRed;
             this.Points = new List<Point>();
         }
     }

@@ -13,22 +13,33 @@ namespace TetrisFinal.Models {
         public int CurrentRotation { get; set; }
 
         public LineBlock() {
-            this.Grid = new int[2, 4, 4] {
+            this.Grid = new int[4, 4, 4] {
                 {
                     { 0, 0, 0, 0 },
+                    { 1, 1, 1, 1 },
+                    { 0, 0, 0, 0 },
+                    { 0, 0, 0, 0 }
+                },
+                {
+                    { 0, 0, 1, 0 },
+                    { 0, 0, 1, 0 },
+                    { 0, 0, 1, 0 },
+                    { 0, 0, 1, 0 }
+                },{
                     { 0, 0, 0, 0 },
                     { 0, 0, 0, 0 },
                     { 1, 1, 1, 1 },
+                    { 0, 0, 0, 0 }
                 },
                 {
-                    { 1, 0, 0, 0 },
-                    { 1, 0, 0, 0 },
-                    { 1, 0, 0, 0 },
-                    { 1, 0, 0, 0 },
+                    { 0, 1, 0, 0 },
+                    { 0, 1, 0, 0 },
+                    { 0, 1, 0, 0 },
+                    { 0, 1, 0, 0 }
                 }
             };
 
-            this.Color = Brushes.Orange;
+            this.Color = Brushes.DarkOrange;
             this.Points = new List<Point>();
         }
     }
