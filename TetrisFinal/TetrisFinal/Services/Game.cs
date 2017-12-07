@@ -27,6 +27,7 @@ namespace TetrisFinal.Services {
         public int Level { get; set; }
         public int Score { get; set; }
         public GameBoard Gameboard { get; set; }
+        public LinkedList<Block> NextBlocks { get; set; }
 
         public Game() {
             _timer = new Timer();
@@ -44,6 +45,8 @@ namespace TetrisFinal.Services {
             Level = 1;
             _linesThisLevel = 0;
             _timer.Enabled = false;
+            NextBlocks = new LinkedList<Block>();
+            GetNextBlock(2);
         }
 
         public void Start() {
@@ -56,20 +59,23 @@ namespace TetrisFinal.Services {
             _timer.Enabled = false;
         }
 
-        public Block GetNextBlock() {
+        public void GetNextBlock(int numBlocksToGet) {
             Random r = new Random();
-            Block toReturn = null;
-            switch(r.Next(0, 7)) {
-                case 0: toReturn = new BumpOnALogBlock(); break;
-                case 1: toReturn = new L1Block(); break;
-                case 2: toReturn = new L2Block(); break;
-                case 3: toReturn = new LineBlock(); break;
-                case 4: toReturn = new SquareBlock(); break;
-                case 5: toReturn = new ZigBlock(); break;
-                case 6: toReturn = new ZagBlock(); break;
-            }
 
-            return toReturn;
+            for(int i = 0; i < numBlocksToGet; i++) {
+                Block block = null;
+                switch(r.Next(0, 7)) {
+                    case 0: block = new BumpOnALogBlock(); break;
+                    case 1: block = new L1Block(); break;
+                    case 2: block = new L2Block(); break;
+                    case 3: block = new LineBlock(); break;
+                    case 4: block = new SquareBlock(); break;
+                    case 5: block = new ZigBlock(); break;
+                    case 6: block = new ZagBlock(); break;
+                }
+
+                NextBlocks.AddLast(block);
+            }
         }
 
         public void LevelUp() {
@@ -86,7 +92,9 @@ namespace TetrisFinal.Services {
             if(_currentBlock == null) { // If there is no current block, get new block and insert it on the gameboard
 
                 // Get new block
-                _currentBlock = GetNextBlock();
+                GetNextBlock(1);
+                _currentBlock = NextBlocks.ElementAt(0);
+                NextBlocks.RemoveFirst();
 
                 // Create initial points for this block, in reference to the gameboard
                 for(int i = 0; i < _currentBlock.Grid.GetLength(1); i++) {
