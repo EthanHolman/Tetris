@@ -50,7 +50,7 @@ namespace TetrisFinal.Services {
             _linesThisLevel = 0;
             _timer.Enabled = false;
             NextBlocks = new LinkedList<Block>();
-            GetNextBlock(2);
+            StageNextBlocks(2);
         }
 
         public void EndGame() {
@@ -69,7 +69,7 @@ namespace TetrisFinal.Services {
             _timer.Enabled = false;
         }
 
-        public void GetNextBlock(int numBlocksToGet) {
+        public void StageNextBlocks(int numBlocksToGet) {
             Random r = new Random();
 
             for(int i = 0; i < numBlocksToGet; i++) {
@@ -109,7 +109,7 @@ namespace TetrisFinal.Services {
             if(_currentBlock == null) { // If there is no current block, get new block and insert it on the gameboard
 
                 // Get new block
-                GetNextBlock(1);
+                StageNextBlocks(1);
                 _currentBlock = NextBlocks.ElementAt(0);
                 NextBlocks.RemoveFirst();
                 _currentBlock.Points.Clear();
@@ -127,13 +127,13 @@ namespace TetrisFinal.Services {
                 // If block can't move down, then it's hit bottom
                 if (!MoveCurrentBlock(MoveDirection.Down)) {
                     _currentBlock = null; // time for a new block
+
+                    // Check for and clear any lines, updating line counts, level & score
+                    CheckForAndRemoveLines();
                 }
             }
 
-            //TODO update line counts, level and score
-            // Check for and clear any lines, updating line counts, level & score
-            CheckForAndRemoveLines();
-
+            // Tell the GUI to update
             CallUpdateGUI();
         }
 

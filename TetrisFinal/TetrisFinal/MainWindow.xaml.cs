@@ -44,7 +44,7 @@ namespace TetrisFinal {
             return rectangle;
         }
 
-        private void LoopGrid() {
+        private void UpdateGameboard() {
             MainCanvas.Children.Clear();
             for (int row = 0; row < GameBoard.GAMEBOARD_HEIGHT; row++) {
                 for (int column = 0; column < GameBoard.GAMEBOARD_WIDTH; column++) {
@@ -74,7 +74,7 @@ namespace TetrisFinal {
         private void OnGameboardUpdate() {
             // Cross-thread safety
             Action action = () => {
-                LoopGrid();
+                UpdateGameboard();
                 SetNextBlock();
                 UpdateLevelInfo();
             };
@@ -100,11 +100,31 @@ namespace TetrisFinal {
         }
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            PauseGame();
+
             if (MessageBox.Show("Are you sure you want to exit?", "Close Tetris", MessageBoxButton.YesNo) != MessageBoxResult.Yes) e.Cancel = true;
             else {
                 if (_about != null) _about.Close();
                 if (_rules != null) _rules.Close();
             }
+        }
+
+        private void PauseGame() {
+            this._tetris.Pause();
+            IsPaused_Label.Visibility = Visibility.Visible;
+            Pause_MenuItem.IsEnabled = false;
+            Start_MenuItem.IsEnabled = true;
+            Save_MenuItem.IsEnabled = true;
+            Load_MenuItem.IsEnabled = true;
+        }
+
+        private void StartGame() {
+            this._tetris.Start();
+            IsPaused_Label.Visibility = Visibility.Hidden;
+            Pause_MenuItem.IsEnabled = true;
+            Start_MenuItem.IsEnabled = false;
+            Save_MenuItem.IsEnabled = false;
+            Load_MenuItem.IsEnabled = false;
         }
 
         //---------------------------------------Commands--------------------------------------
@@ -125,27 +145,11 @@ namespace TetrisFinal {
             
         }
 
-        private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) {
-            this._tetris.Start();
-            IsPaused_Label.Visibility = Visibility.Hidden;
-            Pause_MenuItem.IsEnabled = true;
-            Start_MenuItem.IsEnabled = false;
-            Save_MenuItem.IsEnabled = false;
-            Load_MenuItem.IsEnabled = false;
-        }
+        private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) => StartGame();
 
-        private void ExecutedPauseCommand(object sender, ExecutedRoutedEventArgs e) {
-            this._tetris.Pause();
-            IsPaused_Label.Visibility = Visibility.Visible;
-            Pause_MenuItem.IsEnabled = false;
-            Start_MenuItem.IsEnabled = true;
-            Save_MenuItem.IsEnabled = true;
-            Load_MenuItem.IsEnabled = true;
-        }
+        private void ExecutedPauseCommand(object sender, ExecutedRoutedEventArgs e) => PauseGame();
 
-        private void ExecutedExitCommand(object sender, ExecutedRoutedEventArgs e) {
-            Close();
-        }
+        private void ExecutedExitCommand(object sender, ExecutedRoutedEventArgs e) => Close();
 
         // TODO implement about and rules boxes
         private void ExecutedAboutCommand(object sender, ExecutedRoutedEventArgs e) {
@@ -184,114 +188,47 @@ namespace TetrisFinal {
             SetNextBlock();
         }
 
-        // TODO HomeCheat
-        private void ExecutedHomeCheatCommand(object sender, ExecutedRoutedEventArgs e) {
-            
-        }
+        private void ExecutedHomeCheatCommand(object sender, ExecutedRoutedEventArgs e) { _tetris.LevelUp(); UpdateLevelInfo(); }
 
         //---------------------------CanExecute Commands--------------------------------------
-        private void CanExecuteNewGameCommand(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void CanExecuteNewGameCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
-
-            if (target != null)
-            {
-                e.CanExecute = true;
-            }
-            else
-            {
-                e.CanExecute = false;
-            }
+            if (target != null) e.CanExecute = true; else e.CanExecute = false;
         }
 
         private void CanExecuteSaveCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
-
-            if (target != null) {
-                e.CanExecute = true;
-            } else {
-                e.CanExecute = false;
-            }
+            if (target != null) e.CanExecute = true; else e.CanExecute = false;
         }
 
         private void CanExecuteLoadCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
-
-            if (target != null) {
-                e.CanExecute = true;
-            } else {
-                e.CanExecute = false;
-            }
+            if (target != null) e.CanExecute = true; else e.CanExecute = false;
         }
 
-        private void CanExecuteStartCommand(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void CanExecuteStartCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
-
-            if (target != null)
-            {
-                e.CanExecute = true;
-            }
-            else
-            {
-                e.CanExecute = false;
-            }
+            if (target != null) e.CanExecute = true; else e.CanExecute = false;
         }
 
-        private void CanExecutePauseCommand(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void CanExecutePauseCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
-
-            if (target != null)
-            {
-                e.CanExecute = true;
-            }
-            else
-            {
-                e.CanExecute = false;
-            }
+            if (target != null) e.CanExecute = true; else e.CanExecute = false;
         }
 
-        private void CanExecuteExitCommand(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void CanExecuteExitCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
-
-            if (target != null)
-            {
-                e.CanExecute = true;
-            }
-            else
-            {
-                e.CanExecute = false;
-            }
+            if (target != null) e.CanExecute = true; else e.CanExecute = false;
         }
 
-        private void CanExecuteAboutCommand(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void CanExecuteAboutCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
-
-            if (target != null)
-            {
-                e.CanExecute = true;
-            }
-            else
-            {
-                e.CanExecute = false;
-            }
+            if (target != null) e.CanExecute = true; else e.CanExecute = false;
         }
 
-        private void CanExecuteRulesCommand(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void CanExecuteRulesCommand(object sender, CanExecuteRoutedEventArgs e) {
             Control target = e.Source as Control;
-
-            if (target != null)
-            {
-                e.CanExecute = true;
-            }
-            else
-            {
-                e.CanExecute = false;
-            }
+            if (target != null) e.CanExecute = true; else e.CanExecute = false;
         }
 
         private void CanExecuteMoveLeftCommand(object sender, CanExecuteRoutedEventArgs e) {
