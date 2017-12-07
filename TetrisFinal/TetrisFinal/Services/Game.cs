@@ -78,6 +78,10 @@ namespace TetrisFinal.Services {
             }
         }
 
+        public Block GetNextBlock() {
+            return NextBlocks.ElementAt(0);
+        }
+
         public void LevelUp() {
             _speed *= 0.75; // this increases speed by 25%
             _timer.Interval = _speed;
