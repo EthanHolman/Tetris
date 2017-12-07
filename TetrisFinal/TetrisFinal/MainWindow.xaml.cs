@@ -21,13 +21,14 @@ namespace TetrisFinal {
     /// </summary>
     public partial class MainWindow : Window {
         private Game _tetris;
-        private Window _about;
-        private Window _rules;
+        private AboutGame _about;
+        private Rules _rules;
 
         public MainWindow() {
             InitializeComponent();
 
             _tetris = new Game();
+            _about = new AboutGame();
 
             _tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
             _tetris.AddGameOver(OnGameOver);
@@ -90,6 +91,7 @@ namespace TetrisFinal {
             // Cross-thread safety
             Action action = () => {
                 GameOver_Label.Visibility = Visibility.Visible;
+                _about.UpdateHighScore((int)CurScore.Content);
             };
 
             var dispatcher = Application.Current.Dispatcher;

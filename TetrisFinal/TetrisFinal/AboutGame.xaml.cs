@@ -24,5 +24,12 @@ namespace TetrisFinal {
         private void OKButton_Click(object sender, RoutedEventArgs e) {
             this.Hide();
         }
+
+        public void UpdateHighScore(int newScore) {
+            if (CurHighScore_Label.Content.ToString().CompareTo(newScore.ToString()) < 0) {
+                CurHighScore_Label.Content = newScore;
+                MessageBox.Show("New High Score!");
+            }
+        }
     }
 }
