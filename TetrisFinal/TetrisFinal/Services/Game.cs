@@ -23,7 +23,6 @@ namespace TetrisFinal.Services {
         private event GameOverEventHandler _onGameOver;
         private Block _currentBlock;
         private double _speed;
-        private int _linesThisLevel;
 
 
         public bool GameRunning { get => _GameRunning; }
@@ -48,7 +47,6 @@ namespace TetrisFinal.Services {
             _currentBlock = null;
             LineCount = 0;
             Level = 1;
-            _linesThisLevel = 0;
             _timer.Enabled = false;
             NextBlocks = new LinkedList<Block>();
             StageNextBlocks(2);
@@ -97,11 +95,11 @@ namespace TetrisFinal.Services {
         }
 
         public void LevelUp() {
-            _speed *= 0.75; // this increases speed by 25%
+            _speed *= 1/1.25; // this increases speed by 25%
             _timer.Interval = _speed;
 
             Level++;
-            _linesThisLevel = 0;
+            LineCount = 0;
         }
 
         // This method will get called every time the timer "ticks" (when game is started/running)
@@ -164,10 +162,9 @@ namespace TetrisFinal.Services {
 
             if (lines.Count > 0) {
                 LineCount += lines.Count;
-                _linesThisLevel += lines.Count;
                 UpdateScore(lines.Count);
 
-                if (_linesThisLevel > 9) LevelUp();
+                if (LineCount > 9) LevelUp();
 
                 foreach (int lineNumber in lines)
                     Gameboard.RemoveLine(lineNumber);
