@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -278,5 +279,47 @@ namespace TetrisFinal.Services {
         public void AddGameboardUpdateEventHandler(GameboardUpdateEventHandler blockMove) { _onGameboardUpdate += blockMove; }
 
         public void AddGameOver(GameOverEventHandler gameOver) => _onGameOver += gameOver;
+
+        /// <summary>
+        /// Saves the entire game (including gameboard) to a file "saved-game.xml" at pathToSaveFile
+        /// ** BASED FROM MSDN EXAMPLE **
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns>True if game was saved successfully, False if there was an error</returns>
+        public static bool SaveGame(Game game) {
+            var pathToSaveFile = @".\saved-game.xml";
+
+            try {
+                var writer = new System.Xml.Serialization.XmlSerializer(typeof(Game));
+                var file = File.Create(pathToSaveFile);
+
+                writer.Serialize(file, game);
+
+                file.Close();
+                return true;
+            } catch (Exception) {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Loads a saved game in directory stored in file "saved-game.xml"
+        /// </summary>
+        /// <returns>A game object contained in path upon success, or null if an error was encountered</returns>
+        public static Game LoadGame() {
+            Game toReturn = null;
+
+            try {
+                var reader = new System.Xml.Serialization.XmlSerializer(typeof(Game));
+                var file = new StreamReader(@".\saved-game.xml");
+                
+                toReturn = (Game)reader.Deserialize(file);
+                
+                file.Close();
+                return toReturn;
+            } catch (Exception) {
+                return null;
+            }
+        }
     }
 }

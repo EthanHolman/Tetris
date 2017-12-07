@@ -127,6 +127,15 @@ namespace TetrisFinal {
             Load_MenuItem.IsEnabled = false;
         }
 
+        private void LoadSavedGame() {
+            _tetris = Game.LoadGame();
+            OnGameboardUpdate();
+        }
+
+        private void SaveCurrentGame() {
+            Game.SaveGame(_tetris);
+        }
+
         //---------------------------------------Commands--------------------------------------
         private void ExecutedNewGameCommand(object sender, ExecutedRoutedEventArgs e) {
             this._tetris.InitGame();
@@ -137,13 +146,9 @@ namespace TetrisFinal {
             GameOver_Label.Visibility = Visibility.Hidden;
         }
 
-        private void ExecutedSaveCommand(object sender, ExecutedRoutedEventArgs e) {
-            
-        }
+        private void ExecutedSaveCommand(object sender, ExecutedRoutedEventArgs e) => SaveCurrentGame();
 
-        private void ExecutedLoadCommand(object sender, ExecutedRoutedEventArgs e) {
-            
-        }
+        private void ExecutedLoadCommand(object sender, ExecutedRoutedEventArgs e) => LoadSavedGame();
 
         private void ExecutedStartCommand(object sender, ExecutedRoutedEventArgs e) => StartGame();
 
