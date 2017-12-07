@@ -82,6 +82,8 @@ namespace TetrisFinal.Services {
                     case 6: block = new ZagBlock(); break;
                 }
 
+                block.CurrentRotation = r.Next(0, block.Grid.GetLength(0));
+
                 block = AddPointsToBlock(block, 0);
                 NextBlocks.AddLast(block);
             }
@@ -262,6 +264,10 @@ namespace TetrisFinal.Services {
 
         public void CallGameOver() {
             if(_onGameOver != null) _onGameOver();
+        }
+
+        public void Cheat_LineBlock() {
+            NextBlocks.AddFirst(new LineBlock());
         }
 
         public void AddGameboardUpdateEventHandler(GameboardUpdateEventHandler blockMove) { _onGameboardUpdate += blockMove; }
