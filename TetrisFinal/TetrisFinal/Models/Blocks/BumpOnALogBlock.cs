@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
+using TetrisFinal.Models;
 
 namespace TetrisFinal.Models {
+    [Serializable]
     public class BumpOnALogBlock : Block {
 
         public int[,,] Grid { get; set; }
-        public SolidColorBrush Color { get; set; }
+        public Colors Color { get; set; }
         public List<Point> Points { get; set; }
         public int CurrentRotation { get; set; }
 
@@ -38,7 +39,7 @@ namespace TetrisFinal.Models {
                 }
             };
 
-            this.Color = Brushes.Black;
+            this.Color = Colors.Black;
             this.Points = new List<Point>();
         }
     }

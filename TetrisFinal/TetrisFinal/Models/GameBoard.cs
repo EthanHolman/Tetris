@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TetrisFinal.Models {
+    [Serializable]
     public class GameBoard {
 
         public const int GAMEBOARD_HEIGHT = 18;

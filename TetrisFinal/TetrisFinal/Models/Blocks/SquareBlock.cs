@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
+using TetrisFinal.Models;
 
 namespace TetrisFinal.Models {
+    [Serializable]
     class SquareBlock : Block {
-        public SolidColorBrush Color { get; set; }
+        public Colors Color { get; set; }
         public int[,,] Grid { get; set; }
         public List<Point> Points { get; set; }
         public int CurrentRotation { get; set; }
@@ -22,7 +23,7 @@ namespace TetrisFinal.Models {
                 }
             };
 
-            this.Color = Brushes.Green;
+            this.Color = Colors.Green;
             this.Points = new List<Point>();
         }
     }

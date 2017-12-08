@@ -40,7 +40,7 @@ namespace TetrisFinal {
             rectangle.Height = 30;
             rectangle.Stroke = Brushes.White;
             rectangle.StrokeThickness = 2;
-            rectangle.Fill = point.Color;
+            rectangle.Fill = ConvertToWpfColor(point.Color);
             rectangle.Margin = new Thickness(point.x*30, point.y*30, 0, 0);
             return rectangle;
         }
@@ -92,6 +92,7 @@ namespace TetrisFinal {
             Action action = () => {
                 GameOver_Label.Visibility = Visibility.Visible;
                 _about.UpdateHighScore((int)CurScore.Content);
+                Pause_MenuItem.IsEnabled = false;
             };
 
             var dispatcher = Application.Current.Dispatcher;
@@ -132,11 +133,33 @@ namespace TetrisFinal {
 
         private void LoadSavedGame() {
             _tetris = Game.LoadGame();
+
+            if(_tetris == null) {
+                MessageBox.Show("Sorry, there was an error loading saved game");
+                return;
+            }
+
+            _tetris.AddGameboardUpdateEventHandler(OnGameboardUpdate);
+            _tetris.AddGameOver(OnGameOver);
             OnGameboardUpdate();
         }
 
         private void SaveCurrentGame() {
             Game.SaveGame(_tetris);
+        }
+
+        private SolidColorBrush ConvertToWpfColor(TetrisFinal.Models.Colors color) {
+            switch(color) {
+                case Models.Colors.Black: return new SolidColorBrush(System.Windows.Media.Colors.Black);
+                case Models.Colors.Blue: return new SolidColorBrush(System.Windows.Media.Colors.Blue);
+                case Models.Colors.DarkOrange: return new SolidColorBrush(System.Windows.Media.Colors.DarkOrange);
+                case Models.Colors.DarkRed: return new SolidColorBrush(System.Windows.Media.Colors.DarkRed);
+                case Models.Colors.DarkTurqoise: return new SolidColorBrush(System.Windows.Media.Colors.DarkTurquoise);
+                case Models.Colors.DarkViolet: return new SolidColorBrush(System.Windows.Media.Colors.DarkViolet);
+                case Models.Colors.Green: return new SolidColorBrush(System.Windows.Media.Colors.Green);
+            }
+
+            return null;
         }
 
         //---------------------------------------Commands--------------------------------------

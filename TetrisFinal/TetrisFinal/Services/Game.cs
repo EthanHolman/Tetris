@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -18,7 +20,7 @@ namespace TetrisFinal.Services {
 
 
         private bool _GameRunning;
-        private Timer _timer;
+        [NonSerialized] private Timer _timer;
         private event GameboardUpdateEventHandler _onGameboardUpdate;
         private event GameOverEventHandler _onGameOver;
         private Block _currentBlock;
@@ -284,17 +286,17 @@ namespace TetrisFinal.Services {
         /// <param name="game"></param>
         /// <returns>True if game was saved successfully, False if there was an error</returns>
         public static bool SaveGame(Game game) {
-            var pathToSaveFile = @".\saved-game.xml";
+            var pathToSaveFile = @"saved-game.xml";
 
             try {
-                var writer = new System.Xml.Serialization.XmlSerializer(typeof(Game));
-                var file = File.Create(pathToSaveFile);
-
-                writer.Serialize(file, game);
-
-                file.Close();
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream(pathToSaveFile, FileMode.Create, FileAccess.Write, FileShare.None);
+                game._onGameOver = null;
+                game._onGameboardUpdate = null;
+                formatter.Serialize(stream, game);
+                stream.Close();
                 return true;
-            } catch (Exception) {
+            } catch (Exception ex) {
                 return false;
             }
         }
@@ -305,14 +307,16 @@ namespace TetrisFinal.Services {
         /// <returns>A game object contained in path upon success, or null if an error was encountered</returns>
         public static Game LoadGame() {
             Game toReturn = null;
+            var pathToSaveFile = @"saved-game.xml";
 
             try {
-                var reader = new System.Xml.Serialization.XmlSerializer(typeof(Game));
-                var file = new StreamReader(@".\saved-game.xml");
-                
-                toReturn = (Game)reader.Deserialize(file);
-                
-                file.Close();
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream(pathToSaveFile, FileMode.Open, FileAccess.Read, FileShare.Read);
+                toReturn = (Game)formatter.Deserialize(stream);
+                stream.Close();
+                toReturn._timer = new Timer();
+                toReturn._timer.Interval = toReturn._speed;
+                toReturn._timer.Elapsed += toReturn.OnTimerTick;
                 return toReturn;
             } catch (Exception) {
                 return null;

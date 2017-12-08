@@ -61,6 +61,7 @@
     <Compile Include="Models\Block.cs" />
     <Compile Include="Models\BlockShapes.cs" />
     <Compile Include="Models\Blocks\BumpOnALogBlock.cs" />
+    <Compile Include="Models\Colors.cs" />
     <Compile Include="Models\GameBoard.cs" />
     <Compile Include="Models\Blocks\L1Block.cs" />
     <Compile Include="Models\Blocks\L2Block.cs" />
