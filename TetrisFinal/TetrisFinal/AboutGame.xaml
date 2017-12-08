@@ -23,10 +23,10 @@
                     <Run Text="Version 1.0"/>
                 </Paragraph>
                 <Paragraph>
-                    <Run Text="VisualStudio ..."/>
+                    <Run Text="VisualStudio 2017"/>
                 </Paragraph>
                 <Paragraph>
-                    <Run Text="..."/>
+                    <Run Text=".NET Version 4.6"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
